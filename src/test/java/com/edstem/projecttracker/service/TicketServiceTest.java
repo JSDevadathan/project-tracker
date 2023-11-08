@@ -114,6 +114,16 @@ class TicketServiceTest {
     }
 
     @Test
+    void testGetTicketsByCategoryName() {
+        Category.CategoryBuilder nameResult = Category.builder().categoryId(1L).name("Name");
+        when(categoryRepository.findByName(Mockito.<String>any()))
+                .thenReturn(nameResult.tickets(new ArrayList<>()).build());
+        List<TicketResponse> actualTicketsByCategoryName = ticketService.getTicketsByCategoryName("Name");
+        verify(categoryRepository).findByName(Mockito.<String>any());
+        assertTrue(actualTicketsByCategoryName.isEmpty());
+    }
+
+    @Test
     void testDeleteTicket() {
         doNothing().when(ticketRepository).delete(Mockito.<Ticket>any());
         Optional<Ticket> ofResult = Optional.of(new Ticket());

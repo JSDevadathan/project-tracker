@@ -128,6 +128,19 @@ class TicketControllerTest {
     }
 
     @Test
+    void testGetTicketsByCategoryName() throws Exception {
+        when(ticketService.getTicketsByCategoryName(Mockito.<String>any())).thenReturn(new ArrayList<>());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/tickets/categories/name/{name}",
+                "Name");
+        MockMvcBuilders.standaloneSetup(ticketController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content().string("[]"));
+    }
+
+    @Test
     void testDeleteTicket() throws Exception {
         doNothing().when(ticketService).deleteTicket(Mockito.<Long>any());
         MockHttpServletRequestBuilder requestBuilder =
