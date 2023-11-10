@@ -1,17 +1,9 @@
 package com.edstem.projecttracker.service;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import com.edstem.projecttracker.contract.request.CategoryRequest;
 import com.edstem.projecttracker.contract.response.CategoryResponse;
 import com.edstem.projecttracker.model.Category;
 import com.edstem.projecttracker.repository.CategoryRepository;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -21,14 +13,26 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 @ContextConfiguration(classes = {CategoryService.class})
 @ExtendWith(SpringExtension.class)
 class CategoryServiceTest {
-    @MockBean private CategoryRepository categoryRepository;
+    @MockBean
+    private CategoryRepository categoryRepository;
 
-    @Autowired private CategoryService categoryService;
+    @Autowired
+    private CategoryService categoryService;
 
-    @MockBean private ModelMapper modelMapper;
+    @MockBean
+    private ModelMapper modelMapper;
 
     @Test
     void testCreateCategory() {
@@ -39,6 +43,7 @@ class CategoryServiceTest {
         verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<CategoryResponse>>any());
         verify(categoryRepository).save(Mockito.<Category>any());
     }
+
 
     @Test
     void testConvertToDto() {
