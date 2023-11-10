@@ -16,7 +16,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"Ticket 10\",\r\n    \"requirements\": \"Ticket Requirements\",\r\n    \"description\": \"Ticket Description\",\r\n    \"comments\": \"Acceptance Criteria\",\r\n    \"categoryId\": 6\r\n}\r\n",
+					"raw": "{\r\n    \"title\": \"Kodddl\",\r\n    \"requirements\": \"Ticket Requirements Ticket Description fafsjhfuahsbfuasbfu fa yafbhuybayubfuyasbfbauyfbabsufasfyub basufbubasubuasbbfasbfuybasubaububsabfuabsufbausfbuabfubasufbuabfubaufbuabfasbufbasufbausbfasbufbasufbausbfabsufbaffgbfyebgwybgweygb8oeywb8ygbe8gb8ewb8gb8webgybgeybvbnuvnb8ewbg8uwbgwgb8whv8usnew8ugb8wgb sdadadassadasdadsgjnwijgbnpurwbguirnb9unrwubnruwbr ruurgnurgwb9ugwuguiewbvbiwvbwiebvibweiv\",\r\n    \"description\": \"Ticket Description fafsjhfuahsbfuasbfu fa yafbhuybayubfuyasbfbauyfbabsufasfyub basufbubasubuasbbfasbfuybasubaububsabfuabsufbausfbuabfubasufbuabfubaufbuabfasbufbasufbausbfasbufbasufbausbfabsufbaffgbfyebgwybgweygb8oeywb8ygbe8gb8ewb8gb8webgybgeybvbnuvnb8ewbg8uwbgwgb8whv8usnew8ugb8wgb sdadadassadasdadsgjnwijgbnpurwbguirnb9unrwubnruwbr ruurgnurgwb9ugwuguiewbvbiwvbwiebvibweiv\",\r\n    \"comments\": \"Acceptance Criteria\",\r\n    \"name\": \"ff\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -49,7 +49,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Sprint 15\"\r\n}",
+					"raw": "{\r\n    \"name\": \"ff\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -68,7 +68,7 @@
 				},
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/tickets/categories/6"
+				"url": "http://localhost:8080/tickets/categories/8"
 			},
 			"response": []
 		},
@@ -89,7 +89,7 @@
 						}
 					}
 				},
-				"url": "http://localhost:8080/category/categories/2"
+				"url": "http://localhost:8080/category/categories/1"
 			},
 			"response": []
 		},
@@ -127,14 +127,14 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"Ticket 4\",\r\n    \"requirements\": \"Ticket Requirements\",\r\n    \"description\": \"Ticket Description\",\r\n    \"comments\": \"Acceptance Criteria\",\r\n    \"categoryId\": 4\r\n}\r\n",
+					"raw": "{\r\n    \"title\": \"Ticket 4\",\r\n    \"requirements\": \"Ticket Requirements\",\r\n    \"description\": \"description\",\r\n    \"comments\": \"Acceptance Criteria\",\r\n    \"name\": \"dd\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/tickets/4"
+				"url": "http://localhost:8080/tickets/7"
 			},
 			"response": []
 		},
@@ -167,7 +167,7 @@
 				},
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/tickets/categories/name/Sprint 20"
+				"url": "http://localhost:8080/tickets/categories/name/ff"
 			},
 			"response": []
 		}
