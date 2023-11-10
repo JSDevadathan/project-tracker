@@ -17,5 +17,5 @@ public class TicketResponse {
     private String requirements;
     private String description;
     private String comments;
-    private Long categoryId;
+    private String name;
 }

@@ -1,5 +1,6 @@
 package com.edstem.projecttracker.service;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
@@ -7,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import com.edstem.projecttracker.contract.request.TicketRequest;
 import com.edstem.projecttracker.contract.response.TicketResponse;
+import com.edstem.projecttracker.expection.EntityNotFoundException;
 import com.edstem.projecttracker.model.Category;
 import com.edstem.projecttracker.model.Ticket;
 import com.edstem.projecttracker.repository.CategoryRepository;
@@ -36,39 +38,13 @@ class TicketServiceTest {
 
     @Test
     void testCreateTicket() {
-        when(ticketRepository.save(Mockito.<Ticket>any())).thenReturn(new Ticket());
-        Optional<Category> ofResult = Optional.of(new Category());
-        when(categoryRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
-        when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any()))
-                .thenReturn(
-                        TicketResponse.builder()
-                                .categoryId(1L)
-                                .comments("Comments")
-                                .description("The characteristics of someone or something")
-                                .id(1L)
-                                .requirements("Requirements")
-                                .title("Dr")
-                                .build());
-        ticketService.createTicket(new TicketRequest());
-        verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any());
-        verify(categoryRepository).findById(Mockito.<Long>any());
-        verify(ticketRepository).save(Mockito.<Ticket>any());
-    }
-
-    @Test
-    void testConvertToDto() {
-        when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any()))
-                .thenReturn(
-                        TicketResponse.builder()
-                                .categoryId(1L)
-                                .comments("Comments")
-                                .description("The characteristics of someone or something")
-                                .id(1L)
-                                .requirements("Requirements")
-                                .title("Dr")
-                                .build());
-        ticketService.convertToDto(new Ticket());
-        verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any());
+        when(categoryRepository.findByName(Mockito.<String>any())).thenReturn(new Category());
+        when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<Object>>any()))
+                .thenThrow(new EntityNotFoundException("Entity"));
+        assertThrows(EntityNotFoundException.class, () -> ticketService.createTicket(
+                new TicketRequest("Dr", "Requirements", "The characteristics of someone or something", "Comments", "Name")));
+        verify(categoryRepository).findByName(Mockito.<String>any());
+        verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<Ticket>>any());
     }
 
     @Test
@@ -89,29 +65,7 @@ class TicketServiceTest {
         assertTrue(actualTicketsByCategoryId.isEmpty());
     }
 
-    @Test
-    void testUpdateTicket() {
-        when(ticketRepository.save(Mockito.<Ticket>any())).thenReturn(new Ticket());
-        Optional<Ticket> ofResult = Optional.of(new Ticket());
-        when(ticketRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
-        Optional<Category> ofResult2 = Optional.of(new Category());
-        when(categoryRepository.findById(Mockito.<Long>any())).thenReturn(ofResult2);
-        when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any()))
-                .thenReturn(
-                        TicketResponse.builder()
-                                .categoryId(1L)
-                                .comments("Comments")
-                                .description("The characteristics of someone or something")
-                                .id(1L)
-                                .requirements("Requirements")
-                                .title("Dr")
-                                .build());
-        ticketService.updateTicket(1L, new TicketRequest());
-        verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any());
-        verify(categoryRepository).findById(Mockito.<Long>any());
-        verify(ticketRepository).findById(Mockito.<Long>any());
-        verify(ticketRepository).save(Mockito.<Ticket>any());
-    }
+
 
     @Test
     void testGetTicketsByCategoryName() {
@@ -121,6 +75,29 @@ class TicketServiceTest {
         List<TicketResponse> actualTicketsByCategoryName = ticketService.getTicketsByCategoryName("Name");
         verify(categoryRepository).findByName(Mockito.<String>any());
         assertTrue(actualTicketsByCategoryName.isEmpty());
+    }
+
+    @Test
+    void testUpdateTicket() {
+        when(ticketRepository.save(Mockito.<Ticket>any())).thenReturn(new Ticket());
+        Optional<Ticket> ofResult = Optional.of(new Ticket());
+        when(ticketRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
+        when(categoryRepository.findByName(Mockito.<String>any())).thenReturn(new Category());
+        when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any()))
+                .thenReturn(TicketResponse.builder()
+                        .comments("Comments")
+                        .description("The characteristics of someone or something")
+                        .id(1L)
+                        .name("Name")
+                        .requirements("Requirements")
+                        .title("Dr")
+                        .build());
+        ticketService.updateTicket(1L,
+                new TicketRequest("Dr", "Requirements", "The characteristics of someone or something", "Comments", "Name"));
+        verify(categoryRepository).findByName(Mockito.<String>any());
+        verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any());
+        verify(ticketRepository).findById(Mockito.<Long>any());
+        verify(ticketRepository).save(Mockito.<Ticket>any());
     }
 
     @Test

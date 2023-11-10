@@ -21,5 +21,5 @@ public class TicketRequest {
     @Column(columnDefinition = "text")
     private String description;
     private String comments;
-    private Long categoryId;
+    private String name;
 }

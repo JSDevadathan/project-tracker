@@ -23,8 +23,8 @@ public class TicketService {
     public TicketResponse createTicket(TicketRequest ticketRequestDto) {
         Category category =
                 categoryRepository
-                        .findById(ticketRequestDto.getCategoryId())
-                        .orElseThrow(() -> new EntityNotFoundException("Category not found"));
+                        .findByName(ticketRequestDto.getName());
+        Ticket newTicket = modelMapper.map(ticketRequestDto, Ticket.class);
         Ticket ticket =
                 Ticket.builder()
                         .title(ticketRequestDto.getTitle())
@@ -32,9 +32,10 @@ public class TicketService {
                         .description(ticketRequestDto.getDescription())
                         .comments(ticketRequestDto.getComments())
                         .category(category)
+                        .name(ticketRequestDto.getName())
                         .build();
         ticket = ticketRepository.save(ticket);
-        return convertToDto(ticket);
+        return modelMapper.map(ticket, TicketResponse.class);
     }
 
     public TicketResponse convertToDto(Ticket ticket) {
@@ -67,8 +68,7 @@ public class TicketService {
                         .orElseThrow(() -> new EntityNotFoundException("Ticket not found", +id));
         Category category =
                 categoryRepository
-                        .findById(ticketRequestDto.getCategoryId())
-                        .orElseThrow(() -> new EntityNotFoundException("Category not found"));
+                        .findByName(ticketRequestDto.getName());
         ticket =
                 Ticket.builder()
                         .id(ticket.getId())
