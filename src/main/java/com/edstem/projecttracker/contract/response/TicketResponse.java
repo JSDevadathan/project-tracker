@@ -15,7 +15,7 @@ public class TicketResponse {
     private Long id;
     private String title;
     private String requirements;
-    private String description;
+    private String acceptanceCriteria;
     private String comments;
     private String name;
 }

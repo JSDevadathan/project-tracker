@@ -29,7 +29,7 @@ public class TicketService {
                 Ticket.builder()
                         .title(ticketRequestDto.getTitle())
                         .requirements(ticketRequestDto.getRequirements())
-                        .description(ticketRequestDto.getDescription())
+                        .acceptanceCriteria(ticketRequestDto.getAcceptanceCriteria())
                         .comments(ticketRequestDto.getComments())
                         .category(category)
                         .name(ticketRequestDto.getName())
@@ -74,7 +74,7 @@ public class TicketService {
                         .id(ticket.getId())
                         .title(ticketRequestDto.getTitle())
                         .requirements(ticketRequestDto.getRequirements())
-                        .description(ticketRequestDto.getDescription())
+                        .acceptanceCriteria(ticketRequestDto.getAcceptanceCriteria())
                         .comments(ticketRequestDto.getComments())
                         .category(category)
                         .build();

@@ -8,13 +8,12 @@ import com.edstem.projecttracker.model.Ticket;
 import com.edstem.projecttracker.repository.CategoryRepository;
 import com.edstem.projecttracker.repository.TicketRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +28,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ContextConfiguration(classes = {TicketService.class})
-@ExtendWith(SpringExtension.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class TicketServiceTest {
     @MockBean
     private CategoryRepository categoryRepository;
@@ -93,6 +92,7 @@ class TicketServiceTest {
         verify(ticketRepository).findAll();
         assertEquals(2, actualViewTicketResult.size());
     }
+
     @Test
     void testGetTicketsByCategoryId() {
         Category.CategoryBuilder nameResult = Category.builder().categoryId(1L).name("Name");
@@ -109,7 +109,6 @@ class TicketServiceTest {
         when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
         assertThrows(EntityNotFoundException.class, () -> ticketService.getTicketsByCategoryId(categoryId));
     }
-
 
 
     @Test
