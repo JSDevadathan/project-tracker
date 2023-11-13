@@ -16,7 +16,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"Kodddl\",\r\n    \"requirements\": \"Ticket Requirements Ticket Description fafsjhfuahsbfuasbfu fa yafbhuybayubfuyasbfbauyfbabsufasfyub basufbubasubuasbbfasbfuybasubaububsabfuabsufbausfbuabfubasufbuabfubaufbuabfasbufbasufbausbfasbufbasufbausbfabsufbaffgbfyebgwybgweygb8oeywb8ygbe8gb8ewb8gb8webgybgeybvbnuvnb8ewbg8uwbgwgb8whv8usnew8ugb8wgb sdadadassadasdadsgjnwijgbnpurwbguirnb9unrwubnruwbr ruurgnurgwb9ugwuguiewbvbiwvbwiebvibweiv\",\r\n    \"description\": \"Ticket Description fafsjhfuahsbfuasbfu fa yafbhuybayubfuyasbfbauyfbabsufasfyub basufbubasubuasbbfasbfuybasubaububsabfuabsufbausfbuabfubasufbuabfubaufbuabfasbufbasufbausbfasbufbasufbausbfabsufbaffgbfyebgwybgweygb8oeywb8ygbe8gb8ewb8gb8webgybgeybvbnuvnb8ewbg8uwbgwgb8whv8usnew8ugb8wgb sdadadassadasdadsgjnwijgbnpurwbguirnb9unrwubnruwbr ruurgnurgwb9ugwuguiewbvbiwvbwiebvibweiv\",\r\n    \"comments\": \"Acceptance Criteria\",\r\n    \"name\": \"ff\"\r\n}\r\n",
+					"raw": "{\r\n    \"title\": \"Ticket 12\",\r\n    \"description\": \"Ticket Requirements\",\r\n    \"acceptanceCriteria\": \"Acceptance Criteria\",\r\n    \"categoryId\": 1\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -49,7 +49,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"ff\"\r\n}",
+					"raw": "{\r\n    \"name\": \"User\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -68,7 +68,7 @@
 				},
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/tickets/categories/8"
+				"url": "http://localhost:8080/tickets/categories/3"
 			},
 			"response": []
 		},
@@ -127,7 +127,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"Ticket 4\",\r\n    \"requirements\": \"Ticket Requirements\",\r\n    \"description\": \"description\",\r\n    \"comments\": \"Acceptance Criteria\",\r\n    \"name\": \"dd\"\r\n}\r\n",
+					"raw": "{\r\n    \"title\": \"Kodddl\",\r\n    \"requirements\": \"Ticket Requirements\",\r\n    \"acceptanceCriteria\": \"Acceptance Criteria\",\r\n    \"comments\": \"Comments\",\r\n    \"name\": \"\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -167,7 +167,52 @@
 				},
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/tickets/categories/name/ff"
+				"url": "http://localhost:8080/tickets/categories/name/User"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Comment",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\": \"Comment Added\",\r\n    \"ticketId\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/comments"
+			},
+			"response": []
+		},
+		{
+			"name": "View Comments",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/comments"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Comment",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8080/comments/4"
 			},
 			"response": []
 		}
