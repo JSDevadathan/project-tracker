@@ -21,15 +21,15 @@ public class TicketService {
     private final ModelMapper modelMapper;
 
     public TicketResponse createTicket(TicketRequest ticketRequestDto) {
-        Ticket newTicket = modelMapper.map(ticketRequestDto, Ticket.class);
-        Ticket ticket =
-                Ticket.builder()
-                        .title(ticketRequestDto.getTitle())
-                        .description(ticketRequestDto.getDescription())
-                        .acceptanceCriteria(ticketRequestDto.getAcceptanceCriteria())
-                        .build();
+        Category category = categoryRepository.findById(ticketRequestDto.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
+        Ticket ticket = Ticket.builder()
+                .title(ticketRequestDto.getTitle())
+                .description(ticketRequestDto.getDescription())
+                .acceptanceCriteria(ticketRequestDto.getAcceptanceCriteria())
+                .category(category)
+                .build();
         ticket = ticketRepository.save(ticket);
-        return modelMapper.map(ticket, TicketResponse.class);
+        return convertToDto(ticket);
     }
 
     public TicketResponse convertToDto(Ticket ticket) {
@@ -56,17 +56,15 @@ public class TicketService {
     }
 
     public TicketResponse updateTicket(Long id, TicketRequest ticketRequestDto) {
-        Ticket ticket =
-                ticketRepository
-                        .findById(id)
-                        .orElseThrow(() -> new EntityNotFoundException("Ticket not found", +id));
-        ticket =
-                Ticket.builder()
-                        .id(ticket.getId())
-                        .title(ticketRequestDto.getTitle())
-                        .description(ticketRequestDto.getDescription())
-                        .acceptanceCriteria(ticketRequestDto.getAcceptanceCriteria())
-                        .build();
+        Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new RuntimeException("Ticket not found"));
+        Category category = categoryRepository.findById(ticketRequestDto.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
+        ticket = Ticket.builder()
+                .ticketId(ticket.getTicketId())
+                .title(ticketRequestDto.getTitle())
+                .description(ticketRequestDto.getDescription())
+                .acceptanceCriteria(ticketRequestDto.getAcceptanceCriteria())
+                .category(category)
+                .build();
         ticket = ticketRepository.save(ticket);
         return convertToDto(ticket);
     }

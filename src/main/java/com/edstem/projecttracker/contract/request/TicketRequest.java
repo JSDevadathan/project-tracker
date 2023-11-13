@@ -14,10 +14,9 @@ import lombok.Setter;
 @Builder
 public class TicketRequest {
     private String title;
-
     @Column(columnDefinition = "text")
     private String description;
-
     @Column(columnDefinition = "text")
     private String acceptanceCriteria;
+    private Long categoryId;
 }

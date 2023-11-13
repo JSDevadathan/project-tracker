@@ -2,8 +2,11 @@ package com.edstem.projecttracker.service;
 
 import com.edstem.projecttracker.contract.request.CommentRequest;
 import com.edstem.projecttracker.contract.response.CommentResponse;
+import com.edstem.projecttracker.expection.EntityNotFoundException;
 import com.edstem.projecttracker.model.Comment;
+import com.edstem.projecttracker.model.Ticket;
 import com.edstem.projecttracker.repository.CommentRepository;
+import com.edstem.projecttracker.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -16,14 +19,19 @@ import java.util.stream.Collectors;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final ModelMapper modelMapper;
+    private final TicketRepository ticketRepository;
 
     public CommentResponse createComment(CommentRequest commentRequest) {
-        Comment newComment = modelMapper.map(commentRequest, Comment.class);
-        Comment comment =
-                Comment.builder()
-                        .text(commentRequest.getText())
-                        .build();
+        Ticket ticket = ticketRepository.findById(commentRequest.getTicketId()).orElseThrow(() -> new RuntimeException("Ticket not found"));
+        Comment comment = Comment.builder()
+                .text(commentRequest.getText())
+                .ticket(ticket)
+                .build();
         comment = commentRepository.save(comment);
+        return convertToDto(comment);
+    }
+
+    private CommentResponse convertToDto(Comment comment) {
         return modelMapper.map(comment, CommentResponse.class);
     }
 
@@ -34,4 +42,8 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
+    public void deleteComment(Long commentId) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new EntityNotFoundException("Comment Not Found"));
+        commentRepository.delete(comment);
+    }
 }

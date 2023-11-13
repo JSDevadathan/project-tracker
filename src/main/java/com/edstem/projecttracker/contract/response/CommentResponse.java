@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class CommentResponse {
-    private Long id;
-
+    private Long commentId;
     private String text;
+    private Long ticketId;
 }

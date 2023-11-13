@@ -32,14 +32,14 @@ class TicketControllerTest {
         when(ticketService.createTicket(Mockito.<TicketRequest>any())).thenReturn(TicketResponse.builder()
                 .acceptanceCriteria("The characteristics of someone or something")
                 .id(1L)
-                .name("Name")
+                .categoryId("Id")
                 .description("Description")
                 .title("Dr")
                 .build());
 
         TicketRequest ticketRequest = new TicketRequest();
         ticketRequest.setAcceptanceCriteria("The characteristics of someone or something");
-        ticketRequest.setName("Name");
+        ticketRequest.setCategoryId("Id");
         ticketRequest.setDescription("Description");
         ticketRequest.setTitle("Dr");
         String content = (new ObjectMapper()).writeValueAsString(ticketRequest);
@@ -54,7 +54,7 @@ class TicketControllerTest {
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
                                 "{\"id\":1,\"title\":\"Dr\",\"description\":\"Description\",\"acceptanceCriteria\":\"The characteristics of someone or"
-                                        + " something\",\"name\":\"Name\"}"));
+                                        + " something\",\"categoryId\":\"Id\"}"));
     }
 
     @Test
@@ -104,14 +104,14 @@ class TicketControllerTest {
                 .thenReturn(TicketResponse.builder()
                         .acceptanceCriteria("The characteristics of someone or something")
                         .id(1L)
-                        .name("Name")
+                        .categoryId("Id")
                         .description("Description")
                         .title("Dr")
                         .build());
 
         TicketRequest ticketRequest = new TicketRequest();
         ticketRequest.setAcceptanceCriteria("The characteristics of someone or something");
-        ticketRequest.setName("Name");
+        ticketRequest.setCategoryId("Id");
         ticketRequest.setDescription("Description");
         ticketRequest.setTitle("Dr");
         String content = (new ObjectMapper()).writeValueAsString(ticketRequest);
@@ -126,7 +126,7 @@ class TicketControllerTest {
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
                                 "{\"id\":1,\"title\":\"Dr\",\"description\":\"Description\",\"acceptanceCriteria\":\"The characteristics of someone or"
-                                        + " something\",\"name\":\"Name\"}"));
+                                        + " something\",\"categoryId\":\"Id\"}"));
     }
     @Test
     void testDeleteTicket() throws Exception {

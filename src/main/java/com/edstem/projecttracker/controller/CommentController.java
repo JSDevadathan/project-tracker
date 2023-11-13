@@ -2,10 +2,13 @@ package com.edstem.projecttracker.controller;
 
 import com.edstem.projecttracker.contract.request.CommentRequest;
 import com.edstem.projecttracker.contract.response.CommentResponse;
+import com.edstem.projecttracker.model.Comment;
 import com.edstem.projecttracker.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +22,17 @@ import java.util.List;
 public class CommentController {
     private final CommentService commentService;
     @PostMapping
-    public CommentResponse createComment(@RequestBody CommentRequest commentRequest){
+    public CommentResponse createComment(@RequestBody CommentRequest commentRequest) {
         return commentService.createComment(commentRequest);
     }
 
     @GetMapping
     public List<CommentResponse> viewAllComments(){
         return commentService.viewAllComments();
+    }
+
+    @DeleteMapping("/{commentId}")
+    public void deleteComment(@PathVariable Long commentId){
+        commentService.deleteComment(commentId);
     }
 }

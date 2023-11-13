@@ -13,4 +13,5 @@ import lombok.Setter;
 @Builder
 public class CommentRequest {
     private String text;
+    private Long ticketId;
 }
