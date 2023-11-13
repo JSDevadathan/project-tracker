@@ -61,11 +61,10 @@ class TicketServiceTest {
     void testConvertToDto() {
         when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any()))
                 .thenReturn(TicketResponse.builder()
-                        .comments("Comments")
                         .acceptanceCriteria("The characteristics of someone or something")
                         .id(1L)
                         .name("Name")
-                        .requirements("Requirements")
+                        .description("Description")
                         .title("Dr")
                         .build());
         ticketService.convertToDto(new Ticket());
@@ -80,11 +79,10 @@ class TicketServiceTest {
         when(ticketRepository.findAll()).thenReturn(ticketList);
         when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any()))
                 .thenReturn(TicketResponse.builder()
-                        .comments("Comments")
                         .acceptanceCriteria("The characteristics of someone or something")
                         .id(1L)
                         .name("Name")
-                        .requirements("Requirements")
+                        .description("Description")
                         .title("Dr")
                         .build());
         List<TicketResponse> actualViewTicketResult = ticketService.viewTicket();
@@ -129,15 +127,14 @@ class TicketServiceTest {
         when(categoryRepository.findByName(Mockito.<String>any())).thenReturn(new Category());
         when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any()))
                 .thenReturn(TicketResponse.builder()
-                        .comments("Comments")
                         .acceptanceCriteria("The characteristics of someone or something")
                         .id(1L)
                         .name("Name")
-                        .requirements("Requirements")
+                        .description("Description")
                         .title("Dr")
                         .build());
         ticketService.updateTicket(1L,
-                new TicketRequest("Dr", "Requirements", "The characteristics of someone or something", "Comments", "Name"));
+                new TicketRequest("Dr", "Requirements", "The characteristics of someone or something", "Name"));
         verify(categoryRepository).findByName(Mockito.<String>any());
         verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any());
         verify(ticketRepository).findById(Mockito.<Long>any());

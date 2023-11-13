@@ -16,10 +16,9 @@ public class TicketRequest {
     private String title;
 
     @Column(columnDefinition = "text")
-    private String requirements;
+    private String description;
 
     @Column(columnDefinition = "text")
     private String acceptanceCriteria;
-    private String comments;
     private String name;
 }

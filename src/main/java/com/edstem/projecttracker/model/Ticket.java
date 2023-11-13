@@ -23,9 +23,8 @@ public class Ticket {
     private Long id;
 
     private String title;
-    private String requirements;
+    private String description;
     private String acceptanceCriteria;
-    private String comments;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")

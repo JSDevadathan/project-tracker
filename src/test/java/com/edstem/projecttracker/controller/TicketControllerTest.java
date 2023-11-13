@@ -30,19 +30,17 @@ class TicketControllerTest {
     @Test
     void testCreateTicket() throws Exception {
         when(ticketService.createTicket(Mockito.<TicketRequest>any())).thenReturn(TicketResponse.builder()
-                .comments("Comments")
                 .acceptanceCriteria("The characteristics of someone or something")
                 .id(1L)
                 .name("Name")
-                .requirements("Requirements")
+                .description("Description")
                 .title("Dr")
                 .build());
 
         TicketRequest ticketRequest = new TicketRequest();
-        ticketRequest.setComments("Comments");
         ticketRequest.setAcceptanceCriteria("The characteristics of someone or something");
         ticketRequest.setName("Name");
-        ticketRequest.setRequirements("Requirements");
+        ticketRequest.setDescription("Description");
         ticketRequest.setTitle("Dr");
         String content = (new ObjectMapper()).writeValueAsString(ticketRequest);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/tickets/create")
@@ -55,8 +53,8 @@ class TicketControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
-                                "{\"id\":1,\"title\":\"Dr\",\"requirements\":\"Requirements\",\"description\":\"The characteristics of someone or"
-                                        + " something\",\"comments\":\"Comments\",\"name\":\"Name\"}"));
+                                "{\"id\":1,\"title\":\"Dr\",\"description\":\"Description\",\"acceptanceCriteria\":\"The characteristics of someone or"
+                                        + " something\",\"name\":\"Name\"}"));
     }
 
     @Test
@@ -104,19 +102,17 @@ class TicketControllerTest {
     void testUpdateTicket() throws Exception {
         when(ticketService.updateTicket(Mockito.<Long>any(), Mockito.<TicketRequest>any()))
                 .thenReturn(TicketResponse.builder()
-                        .comments("Comments")
                         .acceptanceCriteria("The characteristics of someone or something")
                         .id(1L)
                         .name("Name")
-                        .requirements("Requirements")
+                        .description("Description")
                         .title("Dr")
                         .build());
 
         TicketRequest ticketRequest = new TicketRequest();
-        ticketRequest.setComments("Comments");
         ticketRequest.setAcceptanceCriteria("The characteristics of someone or something");
         ticketRequest.setName("Name");
-        ticketRequest.setRequirements("Requirements");
+        ticketRequest.setDescription("Description");
         ticketRequest.setTitle("Dr");
         String content = (new ObjectMapper()).writeValueAsString(ticketRequest);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/tickets/{id}", 1L)
@@ -129,8 +125,8 @@ class TicketControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
-                                "{\"id\":1,\"title\":\"Dr\",\"requirements\":\"Requirements\",\"description\":\"The characteristics of someone or"
-                                        + " something\",\"comments\":\"Comments\",\"name\":\"Name\"}"));
+                                "{\"id\":1,\"title\":\"Dr\",\"description\":\"Description\",\"acceptanceCriteria\":\"The characteristics of someone or"
+                                        + " something\",\"name\":\"Name\"}"));
     }
     @Test
     void testDeleteTicket() throws Exception {
