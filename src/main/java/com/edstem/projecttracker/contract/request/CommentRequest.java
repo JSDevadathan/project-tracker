@@ -1,4 +1,4 @@
-package com.edstem.projecttracker.contract.response;
+package com.edstem.projecttracker.contract.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TicketResponse {
-    private Long id;
-    private String title;
-    private String description;
-    private String acceptanceCriteria;
+public class CommentRequest {
+    private String text;
 }

@@ -11,9 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TicketResponse {
+public class CommentResponse {
     private Long id;
-    private String title;
-    private String description;
-    private String acceptanceCriteria;
+
+    private String text;
 }

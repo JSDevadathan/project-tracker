@@ -21,17 +21,12 @@ public class TicketService {
     private final ModelMapper modelMapper;
 
     public TicketResponse createTicket(TicketRequest ticketRequestDto) {
-        Category category =
-                categoryRepository
-                        .findByName(ticketRequestDto.getName());
         Ticket newTicket = modelMapper.map(ticketRequestDto, Ticket.class);
         Ticket ticket =
                 Ticket.builder()
                         .title(ticketRequestDto.getTitle())
                         .description(ticketRequestDto.getDescription())
                         .acceptanceCriteria(ticketRequestDto.getAcceptanceCriteria())
-                        .category(category)
-                        .name(ticketRequestDto.getName())
                         .build();
         ticket = ticketRepository.save(ticket);
         return modelMapper.map(ticket, TicketResponse.class);
@@ -65,16 +60,12 @@ public class TicketService {
                 ticketRepository
                         .findById(id)
                         .orElseThrow(() -> new EntityNotFoundException("Ticket not found", +id));
-        Category category =
-                categoryRepository
-                        .findByName(ticketRequestDto.getName());
         ticket =
                 Ticket.builder()
                         .id(ticket.getId())
                         .title(ticketRequestDto.getTitle())
                         .description(ticketRequestDto.getDescription())
                         .acceptanceCriteria(ticketRequestDto.getAcceptanceCriteria())
-                        .category(category)
                         .build();
         ticket = ticketRepository.save(ticket);
         return convertToDto(ticket);

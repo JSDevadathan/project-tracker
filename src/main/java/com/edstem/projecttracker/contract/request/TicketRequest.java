@@ -20,5 +20,4 @@ public class TicketRequest {
 
     @Column(columnDefinition = "text")
     private String acceptanceCriteria;
-    private String name;
 }
