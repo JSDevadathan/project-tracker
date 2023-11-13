@@ -5,6 +5,7 @@ import com.edstem.projecttracker.contract.response.CategoryResponse;
 import com.edstem.projecttracker.service.CategoryService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/category")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class CategoryController {
     private final CategoryService categoryService;
 
