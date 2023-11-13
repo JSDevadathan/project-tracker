@@ -31,7 +31,7 @@ class TicketControllerTest {
     void testCreateTicket() throws Exception {
         when(ticketService.createTicket(Mockito.<TicketRequest>any())).thenReturn(TicketResponse.builder()
                 .comments("Comments")
-                .description("The characteristics of someone or something")
+                .acceptanceCriteria("The characteristics of someone or something")
                 .id(1L)
                 .name("Name")
                 .requirements("Requirements")
@@ -40,7 +40,7 @@ class TicketControllerTest {
 
         TicketRequest ticketRequest = new TicketRequest();
         ticketRequest.setComments("Comments");
-        ticketRequest.setDescription("The characteristics of someone or something");
+        ticketRequest.setAcceptanceCriteria("The characteristics of someone or something");
         ticketRequest.setName("Name");
         ticketRequest.setRequirements("Requirements");
         ticketRequest.setTitle("Dr");
@@ -105,7 +105,7 @@ class TicketControllerTest {
         when(ticketService.updateTicket(Mockito.<Long>any(), Mockito.<TicketRequest>any()))
                 .thenReturn(TicketResponse.builder()
                         .comments("Comments")
-                        .description("The characteristics of someone or something")
+                        .acceptanceCriteria("The characteristics of someone or something")
                         .id(1L)
                         .name("Name")
                         .requirements("Requirements")
@@ -114,7 +114,7 @@ class TicketControllerTest {
 
         TicketRequest ticketRequest = new TicketRequest();
         ticketRequest.setComments("Comments");
-        ticketRequest.setDescription("The characteristics of someone or something");
+        ticketRequest.setAcceptanceCriteria("The characteristics of someone or something");
         ticketRequest.setName("Name");
         ticketRequest.setRequirements("Requirements");
         ticketRequest.setTitle("Dr");
