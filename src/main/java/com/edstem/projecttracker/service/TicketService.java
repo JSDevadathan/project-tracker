@@ -7,11 +7,12 @@ import com.edstem.projecttracker.model.Category;
 import com.edstem.projecttracker.model.Ticket;
 import com.edstem.projecttracker.repository.CategoryRepository;
 import com.edstem.projecttracker.repository.TicketRepository;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +36,7 @@ public class TicketService {
     public TicketResponse convertToDto(Ticket ticket) {
         return modelMapper.map(ticket, TicketResponse.class);
     }
+
 
     public List<TicketResponse> viewTicket() {
         List<Ticket> userProfiles = (List<Ticket>) ticketRepository.findAll();

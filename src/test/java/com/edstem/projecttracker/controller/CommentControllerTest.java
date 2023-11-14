@@ -11,10 +11,16 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -36,16 +42,16 @@ public class CommentControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(commentController).build();
     }
 
-//    @Test
-//    public void testCreateComment() throws Exception {
-//        CommentRequest commentRequest = new CommentRequest();
-//        CommentResponse commentResponse = new CommentResponse();
-//        when(commentService.createComment(commentRequest)).thenReturn(commentResponse);
-//        mockMvc.perform(post("/comments")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(new ObjectMapper().writeValueAsString(commentRequest)))
-//                .andExpect(status().isOk());
-//    }
+    @Test
+    public void testCreateComment() throws Exception {
+        CommentRequest commentRequest = new CommentRequest();
+        CommentResponse commentResponse = new CommentResponse();
+        when(commentService.createComment(commentRequest)).thenReturn(commentResponse);
+        mockMvc.perform(post("/comments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(commentRequest)))
+                .andExpect(status().isOk());
+    }
 
     @Test
     public void testViewAllComments() throws Exception {
@@ -54,6 +60,20 @@ public class CommentControllerTest {
         mockMvc.perform(get("/comments")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void deleteComment() throws Exception {
+        Long commentId = 1L;
+
+        doNothing().when(commentService).deleteComment(anyLong());
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/comments/" + commentId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        verify(commentService, times(1)).deleteComment(anyLong());
     }
 
 }

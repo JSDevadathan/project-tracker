@@ -16,7 +16,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"Ticket 12\",\r\n    \"description\": \"Ticket Requirements\",\r\n    \"acceptanceCriteria\": \"Acceptance Criteria\",\r\n    \"categoryId\": 1\r\n}\r\n",
+					"raw": "{\r\n    \"title\": \"Ticket WWWZZ\",\r\n    \"description\": \"Ticket Requirements\",\r\n    \"acceptanceCriteria\": \"Acceptance Criteria\",\r\n    \"categoryId\": 1\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -127,14 +127,14 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"Kodddl\",\r\n    \"requirements\": \"Ticket Requirements\",\r\n    \"acceptanceCriteria\": \"Acceptance Criteria\",\r\n    \"comments\": \"Comments\",\r\n    \"name\": \"\"\r\n}",
+					"raw": "{\r\n    \"title\": \"Ticket JS\",\r\n    \"description\": \"Ticket Requirements\",\r\n    \"acceptanceCriteria\": \"Acceptance Criteria\",\r\n    \"categoryId\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/tickets/7"
+				"url": "http://localhost:8080/tickets/1"
 			},
 			"response": []
 		},

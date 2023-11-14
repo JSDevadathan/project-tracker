@@ -30,17 +30,17 @@ class TicketControllerTest {
     @Test
     void testCreateTicket() throws Exception {
         when(ticketService.createTicket(Mockito.<TicketRequest>any())).thenReturn(TicketResponse.builder()
-                .acceptanceCriteria("The characteristics of someone or something")
-                .id(1L)
-                .categoryId("Id")
-                .description("Description")
+                .acceptanceCriteria("Acceptance Criteria")
+                .categoryId(1L)
+                .description("The characteristics of someone or something")
+                .ticketId(1L)
                 .title("Dr")
                 .build());
 
         TicketRequest ticketRequest = new TicketRequest();
-        ticketRequest.setAcceptanceCriteria("The characteristics of someone or something");
-        ticketRequest.setCategoryId("Id");
-        ticketRequest.setDescription("Description");
+        ticketRequest.setAcceptanceCriteria("Acceptance Criteria");
+        ticketRequest.setCategoryId(1L);
+        ticketRequest.setDescription("The characteristics of someone or something");
         ticketRequest.setTitle("Dr");
         String content = (new ObjectMapper()).writeValueAsString(ticketRequest);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/tickets/create")
@@ -53,9 +53,11 @@ class TicketControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
-                                "{\"id\":1,\"title\":\"Dr\",\"description\":\"Description\",\"acceptanceCriteria\":\"The characteristics of someone or"
-                                        + " something\",\"categoryId\":\"Id\"}"));
+                                "{\"ticketId\":1,\"title\":\"Dr\",\"description\":\"The characteristics of someone or something\",\"acceptanceCriteria"
+                                        + "\":\"Acceptance Criteria\",\"categoryId\":1}"));
     }
+
+
 
     @Test
     void testViewTicket() throws Exception {
@@ -102,17 +104,17 @@ class TicketControllerTest {
     void testUpdateTicket() throws Exception {
         when(ticketService.updateTicket(Mockito.<Long>any(), Mockito.<TicketRequest>any()))
                 .thenReturn(TicketResponse.builder()
-                        .acceptanceCriteria("The characteristics of someone or something")
-                        .id(1L)
-                        .categoryId("Id")
-                        .description("Description")
+                        .acceptanceCriteria("Acceptance Criteria")
+                        .categoryId(1L)
+                        .description("The characteristics of someone or something")
+                        .ticketId(1L)
                         .title("Dr")
                         .build());
 
         TicketRequest ticketRequest = new TicketRequest();
-        ticketRequest.setAcceptanceCriteria("The characteristics of someone or something");
-        ticketRequest.setCategoryId("Id");
-        ticketRequest.setDescription("Description");
+        ticketRequest.setAcceptanceCriteria("Acceptance Criteria");
+        ticketRequest.setCategoryId(1L);
+        ticketRequest.setDescription("The characteristics of someone or something");
         ticketRequest.setTitle("Dr");
         String content = (new ObjectMapper()).writeValueAsString(ticketRequest);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/tickets/{id}", 1L)
@@ -125,9 +127,10 @@ class TicketControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
-                                "{\"id\":1,\"title\":\"Dr\",\"description\":\"Description\",\"acceptanceCriteria\":\"The characteristics of someone or"
-                                        + " something\",\"categoryId\":\"Id\"}"));
+                                "{\"ticketId\":1,\"title\":\"Dr\",\"description\":\"The characteristics of someone or something\",\"acceptanceCriteria"
+                                        + "\":\"Acceptance Criteria\",\"categoryId\":1}"));
     }
+
     @Test
     void testDeleteTicket() throws Exception {
         doNothing().when(ticketService).deleteTicket(Mockito.<Long>any());

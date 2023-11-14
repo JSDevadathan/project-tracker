@@ -45,25 +45,47 @@ class TicketServiceTest {
 
     @Test
     void testCreateTicket() {
-        when(categoryRepository.findByName(Mockito.<String>any())).thenReturn(new Category());
-        when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<Object>>any())).thenReturn(new Ticket());
-        TicketRequest ticketRequestDto = mock(TicketRequest.class);
-        when(ticketRequestDto.getTitle()).thenThrow(new EntityNotFoundException("Entity"));
-        when(ticketRequestDto.getName()).thenReturn("Name");
-        assertThrows(EntityNotFoundException.class, () -> ticketService.createTicket(ticketRequestDto));
-        verify(ticketRequestDto).getName();
-        verify(ticketRequestDto).getTitle();
-        verify(categoryRepository).findByName(Mockito.<String>any());
-        verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<Object>>any());
+        Category category = new Category();
+        category.setCategoryId(1L);
+        category.setName("Name");
+        category.setTickets(new ArrayList<>());
+
+        Ticket ticket = new Ticket();
+        ticket.setAcceptanceCriteria("Acceptance Criteria");
+        ticket.setCategory(category);
+        ticket.setComments(new ArrayList<>());
+        ticket.setDescription("The characteristics of someone or something");
+        ticket.setTicketId(1L);
+        ticket.setTitle("Dr");
+        when(ticketRepository.save(Mockito.<Ticket>any())).thenReturn(ticket);
+
+        Category category2 = new Category();
+        category2.setCategoryId(1L);
+        category2.setName("Name");
+        category2.setTickets(new ArrayList<>());
+        Optional<Category> ofResult = Optional.of(category2);
+        when(categoryRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
+        when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any()))
+                .thenReturn(TicketResponse.builder()
+                        .acceptanceCriteria("Acceptance Criteria")
+                        .categoryId(1L)
+                        .description("The characteristics of someone or something")
+                        .ticketId(1L)
+                        .title("Dr")
+                        .build());
+        ticketService.createTicket(new TicketRequest());
+        verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any());
+        verify(categoryRepository).findById(Mockito.<Long>any());
+        verify(ticketRepository).save(Mockito.<Ticket>any());
     }
+
 
     @Test
     void testConvertToDto() {
         when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any()))
                 .thenReturn(TicketResponse.builder()
                         .acceptanceCriteria("The characteristics of someone or something")
-                        .id(1L)
-                        .name("Name")
+                        .categoryId(1L)
                         .description("Description")
                         .title("Dr")
                         .build());
@@ -80,8 +102,7 @@ class TicketServiceTest {
         when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any()))
                 .thenReturn(TicketResponse.builder()
                         .acceptanceCriteria("The characteristics of someone or something")
-                        .id(1L)
-                        .name("Name")
+                        .categoryId(1L)
                         .description("Description")
                         .title("Dr")
                         .build());
@@ -121,22 +142,52 @@ class TicketServiceTest {
 
     @Test
     void testUpdateTicket() {
-        when(ticketRepository.save(Mockito.<Ticket>any())).thenReturn(new Ticket());
-        Optional<Ticket> ofResult = Optional.of(new Ticket());
+        Category category = new Category();
+        category.setCategoryId(1L);
+        category.setName("Name");
+        category.setTickets(new ArrayList<>());
+
+        Ticket ticket = new Ticket();
+        ticket.setAcceptanceCriteria("Acceptance Criteria");
+        ticket.setCategory(category);
+        ticket.setComments(new ArrayList<>());
+        ticket.setDescription("The characteristics of someone or something");
+        ticket.setTicketId(1L);
+        ticket.setTitle("Dr");
+        Optional<Ticket> ofResult = Optional.of(ticket);
+
+        Category category2 = new Category();
+        category2.setCategoryId(1L);
+        category2.setName("Name");
+        category2.setTickets(new ArrayList<>());
+
+        Ticket ticket2 = new Ticket();
+        ticket2.setAcceptanceCriteria("Acceptance Criteria");
+        ticket2.setCategory(category2);
+        ticket2.setComments(new ArrayList<>());
+        ticket2.setDescription("The characteristics of someone or something");
+        ticket2.setTicketId(1L);
+        ticket2.setTitle("Dr");
+        when(ticketRepository.save(Mockito.<Ticket>any())).thenReturn(ticket2);
         when(ticketRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
-        when(categoryRepository.findByName(Mockito.<String>any())).thenReturn(new Category());
+
+        Category category3 = new Category();
+        category3.setCategoryId(1L);
+        category3.setName("Name");
+        category3.setTickets(new ArrayList<>());
+        Optional<Category> ofResult2 = Optional.of(category3);
+        when(categoryRepository.findById(Mockito.<Long>any())).thenReturn(ofResult2);
         when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any()))
                 .thenReturn(TicketResponse.builder()
-                        .acceptanceCriteria("The characteristics of someone or something")
-                        .id(1L)
-                        .name("Name")
-                        .description("Description")
+                        .acceptanceCriteria("Acceptance Criteria")
+                        .categoryId(1L)
+                        .description("The characteristics of someone or something")
+                        .ticketId(1L)
                         .title("Dr")
                         .build());
-        ticketService.updateTicket(1L,
-                new TicketRequest("Dr", "Requirements", "The characteristics of someone or something", "Name"));
-        verify(categoryRepository).findByName(Mockito.<String>any());
+        ticketService.updateTicket(1L, new TicketRequest());
         verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any());
+        verify(categoryRepository).findById(Mockito.<Long>any());
         verify(ticketRepository).findById(Mockito.<Long>any());
         verify(ticketRepository).save(Mockito.<Ticket>any());
     }
