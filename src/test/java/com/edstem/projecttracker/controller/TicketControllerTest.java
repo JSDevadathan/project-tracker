@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 
 import com.edstem.projecttracker.contract.request.TicketRequest;
 import com.edstem.projecttracker.contract.response.TicketResponse;
+import com.edstem.projecttracker.model.Category;
 import com.edstem.projecttracker.service.TicketService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
@@ -32,13 +33,20 @@ class TicketControllerTest {
         when(ticketService.createTicket(Mockito.<TicketRequest>any())).thenReturn(TicketResponse.builder()
                 .acceptanceCriteria("Acceptance Criteria")
                 .categoryId(1L)
+                .categoryName("Category Name")
                 .description("The characteristics of someone or something")
                 .ticketId(1L)
                 .title("Dr")
                 .build());
 
+        Category category = new Category();
+        category.setCategoryId(1L);
+        category.setName("Name");
+        category.setTickets(new ArrayList<>());
+
         TicketRequest ticketRequest = new TicketRequest();
         ticketRequest.setAcceptanceCriteria("Acceptance Criteria");
+        ticketRequest.setCategory(category);
         ticketRequest.setCategoryId(1L);
         ticketRequest.setDescription("The characteristics of someone or something");
         ticketRequest.setTitle("Dr");
@@ -54,7 +62,7 @@ class TicketControllerTest {
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
                                 "{\"ticketId\":1,\"title\":\"Dr\",\"description\":\"The characteristics of someone or something\",\"acceptanceCriteria"
-                                        + "\":\"Acceptance Criteria\",\"categoryId\":1}"));
+                                        + "\":\"Acceptance Criteria\",\"categoryId\":1,\"categoryName\":\"Category Name\"}"));
     }
 
 
@@ -106,13 +114,20 @@ class TicketControllerTest {
                 .thenReturn(TicketResponse.builder()
                         .acceptanceCriteria("Acceptance Criteria")
                         .categoryId(1L)
+                        .categoryName("Category Name")
                         .description("The characteristics of someone or something")
                         .ticketId(1L)
                         .title("Dr")
                         .build());
 
+        Category category = new Category();
+        category.setCategoryId(1L);
+        category.setName("Name");
+        category.setTickets(new ArrayList<>());
+
         TicketRequest ticketRequest = new TicketRequest();
         ticketRequest.setAcceptanceCriteria("Acceptance Criteria");
+        ticketRequest.setCategory(category);
         ticketRequest.setCategoryId(1L);
         ticketRequest.setDescription("The characteristics of someone or something");
         ticketRequest.setTitle("Dr");
@@ -128,7 +143,7 @@ class TicketControllerTest {
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
                                 "{\"ticketId\":1,\"title\":\"Dr\",\"description\":\"The characteristics of someone or something\",\"acceptanceCriteria"
-                                        + "\":\"Acceptance Criteria\",\"categoryId\":1}"));
+                                        + "\":\"Acceptance Criteria\",\"categoryId\":1,\"categoryName\":\"Category Name\"}"));
     }
 
     @Test

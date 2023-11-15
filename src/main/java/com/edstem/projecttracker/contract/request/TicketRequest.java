@@ -1,6 +1,6 @@
 package com.edstem.projecttracker.contract.request;
 
-import jakarta.persistence.Column;
+import com.edstem.projecttracker.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,4 +17,5 @@ public class TicketRequest {
     private String description;
     private String acceptanceCriteria;
     private Long categoryId;
+    private Category category;
 }

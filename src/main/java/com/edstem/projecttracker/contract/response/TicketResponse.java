@@ -1,5 +1,6 @@
 package com.edstem.projecttracker.contract.response;
 
+import com.edstem.projecttracker.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,4 +18,5 @@ public class TicketResponse {
     private String description;
     private String acceptanceCriteria;
     private Long categoryId;
+    private String categoryName;
 }

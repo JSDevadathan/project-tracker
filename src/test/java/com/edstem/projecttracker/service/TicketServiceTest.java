@@ -69,11 +69,23 @@ class TicketServiceTest {
                 .thenReturn(TicketResponse.builder()
                         .acceptanceCriteria("Acceptance Criteria")
                         .categoryId(1L)
+                        .categoryName("Category Name")
                         .description("The characteristics of someone or something")
                         .ticketId(1L)
                         .title("Dr")
                         .build());
-        ticketService.createTicket(new TicketRequest());
+
+        Category category3 = new Category();
+        category3.setCategoryId(1L);
+        category3.setName("Name");
+        category3.setTickets(new ArrayList<>());
+        ticketService.createTicket(TicketRequest.builder()
+                .acceptanceCriteria("Acceptance Criteria")
+                .category(category3)
+                .categoryId(1L)
+                .description("The characteristics of someone or something")
+                .title("Dr")
+                .build());
         verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any());
         verify(categoryRepository).findById(Mockito.<Long>any());
         verify(ticketRepository).save(Mockito.<Ticket>any());
@@ -141,7 +153,7 @@ class TicketServiceTest {
     }
 
     @Test
-    void testUpdateTicket() {
+    void testUpdateTicket2() {
         Category category = new Category();
         category.setCategoryId(1L);
         category.setName("Name");
@@ -181,11 +193,20 @@ class TicketServiceTest {
                 .thenReturn(TicketResponse.builder()
                         .acceptanceCriteria("Acceptance Criteria")
                         .categoryId(1L)
+                        .categoryName("Category Name")
                         .description("The characteristics of someone or something")
                         .ticketId(1L)
                         .title("Dr")
                         .build());
-        ticketService.updateTicket(1L, new TicketRequest());
+
+        Category category4 = new Category();
+        category4.setCategoryId(1L);
+        category4.setName("Name");
+        category4.setTickets(new ArrayList<>());
+
+        TicketRequest ticketRequestDto = new TicketRequest();
+        ticketRequestDto.setCategory(category4);
+        ticketService.updateTicket(1L, ticketRequestDto);
         verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any());
         verify(categoryRepository).findById(Mockito.<Long>any());
         verify(ticketRepository).findById(Mockito.<Long>any());

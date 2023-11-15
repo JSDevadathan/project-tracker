@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,7 +23,8 @@ public class TicketService {
     private final ModelMapper modelMapper;
 
     public TicketResponse createTicket(TicketRequest ticketRequestDto) {
-        Category category = categoryRepository.findById(ticketRequestDto.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
+       Category category =
+                categoryRepository.findById(ticketRequestDto.getCategory().getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
         Ticket ticket = Ticket.builder()
                 .title(ticketRequestDto.getTitle())
                 .description(ticketRequestDto.getDescription())
@@ -59,7 +61,7 @@ public class TicketService {
 
     public TicketResponse updateTicket(Long id, TicketRequest ticketRequestDto) {
         Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new RuntimeException("Ticket not found"));
-        Category category = categoryRepository.findById(ticketRequestDto.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
+        Category category = categoryRepository.findById(ticketRequestDto.getCategory().getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
         ticket = Ticket.builder()
                 .ticketId(ticket.getTicketId())
                 .title(ticketRequestDto.getTitle())
