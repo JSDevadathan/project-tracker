@@ -127,14 +127,14 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"Ticket JS\",\r\n    \"description\": \"Ticket Requirements\",\r\n    \"acceptanceCriteria\": \"Acceptance Criteria\",\r\n    \"categoryId\": 1\r\n}",
+					"raw": "{\r\n    \"title\": \"Ticket 52\",\r\n    \"description\": \"Ticket Requirements\",\r\n    \"acceptanceCriteria\": \"Acceptance Criteria\",\r\n    \"category\":{\r\n        \"categoryId\": 1\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/tickets/1"
+				"url": "http://localhost:8080/tickets/5"
 			},
 			"response": []
 		},
@@ -181,7 +181,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"text\": \"Comment Added\",\r\n    \"ticketId\": 3\r\n}",
+					"raw": "{\r\n    \"text\": \"Comment R\",\r\n    \"ticketId\": 3\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
