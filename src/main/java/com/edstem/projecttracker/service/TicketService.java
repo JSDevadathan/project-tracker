@@ -94,7 +94,7 @@ public class TicketService {
         List<Ticket> responses = ticketRepository.searchPosts(query);
 
         if (responses.isEmpty()) {
-            throw new EntityNotFoundException("No posts found for the given query: " + query);
+            throw new EntityNotFoundException("Ticket found for the given query: " + query);
         }
 
         return responses.stream()
