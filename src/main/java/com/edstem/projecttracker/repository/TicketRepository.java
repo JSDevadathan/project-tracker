@@ -12,9 +12,9 @@ import java.util.List;
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     @Query("SELECT p FROM Ticket p WHERE " +
-            "p.title LIKE CONCAT('%',:query, '%') " +
-            "OR p.description LIKE CONCAT('%', :query, '%') " +
-            "OR p.acceptanceCriteria LIKE CONCAT('%', :query, '%') " +
-            "OR p.category.name LIKE CONCAT('%', :query, '%')")
+            "LOWER(p.title) LIKE LOWER(CONCAT('%',:query, '%')) " +
+            "OR LOWER(p.description) LIKE LOWER(CONCAT('%', :query, '%')) " +
+            "OR LOWER(p.acceptanceCriteria) LIKE LOWER(CONCAT('%', :query, '%')) " +
+            "OR p.category.name LIKE LOWER(CONCAT('%', :query, '%'))")
     List<Ticket> searchPosts(String query);
 }

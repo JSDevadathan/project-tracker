@@ -98,7 +98,7 @@ public class TicketService {
         }
 
         return responses.stream()
-                .map(post -> modelMapper.map(post, TicketResponse.class))
+                .map(ticket -> modelMapper.map(ticket, TicketResponse.class))
                 .collect(Collectors.toList());
     }
 
