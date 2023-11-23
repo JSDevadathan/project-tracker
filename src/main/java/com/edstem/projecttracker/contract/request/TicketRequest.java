@@ -17,5 +17,4 @@ public class TicketRequest {
     private String description;
     private String acceptanceCriteria;
     private Long categoryId;
-    private Category category;
 }

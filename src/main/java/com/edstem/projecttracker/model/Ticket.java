@@ -33,11 +33,9 @@ public class Ticket {
     @NotNull
     private String title;
 
-    @NotNull
     @Column(columnDefinition = "text")
     private String description;
 
-    @NotNull
     @Column(columnDefinition = "text")
     private String acceptanceCriteria;
 

@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +72,6 @@ class TicketServiceTest {
                 .thenReturn(TicketResponse.builder()
                         .acceptanceCriteria("Acceptance Criteria")
                         .categoryId(1L)
-                        .categoryName("Category Name")
                         .description("The characteristics of someone or something")
                         .ticketId(1L)
                         .title("Dr")
@@ -81,7 +83,6 @@ class TicketServiceTest {
         category3.setTickets(new ArrayList<>());
         ticketService.createTicket(TicketRequest.builder()
                 .acceptanceCriteria("Acceptance Criteria")
-                .category(category3)
                 .categoryId(1L)
                 .description("The characteristics of someone or something")
                 .title("Dr")
@@ -193,7 +194,6 @@ class TicketServiceTest {
                 .thenReturn(TicketResponse.builder()
                         .acceptanceCriteria("Acceptance Criteria")
                         .categoryId(1L)
-                        .categoryName("Category Name")
                         .description("The characteristics of someone or something")
                         .ticketId(1L)
                         .title("Dr")
@@ -205,7 +205,6 @@ class TicketServiceTest {
         category4.setTickets(new ArrayList<>());
 
         TicketRequest ticketRequestDto = new TicketRequest();
-        ticketRequestDto.setCategory(category4);
         ticketService.updateTicket(1L, ticketRequestDto);
         verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any());
         verify(categoryRepository).findById(Mockito.<Long>any());
@@ -221,6 +220,39 @@ class TicketServiceTest {
         ticketService.deleteTicket(1L);
         verify(ticketRepository).delete(Mockito.<Ticket>any());
         verify(ticketRepository).findById(Mockito.<Long>any());
+    }
+
+    @Test
+    void testSearchPosts4() {
+        Category category = new Category();
+        category.setCategoryId(1L);
+        category.setName("Name");
+        category.setTickets(new ArrayList<>());
+
+        Ticket ticket = new Ticket();
+        ticket.setAcceptanceCriteria("Acceptance Criteria");
+        ticket.setCategory(category);
+        ticket.setComments(new ArrayList<>());
+        ticket.setDescription("The characteristics of someone or something");
+        ticket.setTicketId(1L);
+        ticket.setTitle("Dr");
+
+        ArrayList<Ticket> ticketList = new ArrayList<>();
+        ticketList.add(ticket);
+        when(ticketRepository.searchPosts(Mockito.<String>any())).thenReturn(ticketList);
+        when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any()))
+                .thenThrow(new EntityNotFoundException("Entity"));
+        assertThrows(EntityNotFoundException.class, () -> ticketService.searchPosts("Query"));
+        verify(ticketRepository).searchPosts(Mockito.<String>any());
+        verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any());
+    }
+
+    @Test
+    void testGetAppListByPageable() {
+        when(ticketRepository.findAll(Mockito.<Pageable>any())).thenReturn(new PageImpl<>(new ArrayList<>()));
+        Page<TicketResponse> actualAppListByPageable = ticketService.getAppListByPageable(null);
+        verify(ticketRepository).findAll(Mockito.<Pageable>any());
+        assertTrue(actualAppListByPageable.toList().isEmpty());
     }
 }
 

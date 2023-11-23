@@ -9,10 +9,11 @@ import com.edstem.projecttracker.repository.CategoryRepository;
 import com.edstem.projecttracker.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,8 +24,8 @@ public class TicketService {
     private final ModelMapper modelMapper;
 
     public TicketResponse createTicket(TicketRequest ticketRequestDto) {
-       Category category =
-                categoryRepository.findById(ticketRequestDto.getCategory().getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
+        Category category =
+                categoryRepository.findById(ticketRequestDto.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
         Ticket ticket = Ticket.builder()
                 .title(ticketRequestDto.getTitle())
                 .description(ticketRequestDto.getDescription())
@@ -61,7 +62,7 @@ public class TicketService {
 
     public TicketResponse updateTicket(Long id, TicketRequest ticketRequestDto) {
         Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new RuntimeException("Ticket not found"));
-        Category category = categoryRepository.findById(ticketRequestDto.getCategory().getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
+        Category category = categoryRepository.findById(ticketRequestDto.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
         ticket = Ticket.builder()
                 .ticketId(ticket.getTicketId())
                 .title(ticketRequestDto.getTitle())
@@ -87,5 +88,22 @@ public class TicketService {
                         .findById(id)
                         .orElseThrow(() -> new EntityNotFoundException("Ticket not found", +id));
         ticketRepository.delete(ticket);
+    }
+
+    public List<TicketResponse> searchPosts(String query) {
+        List<Ticket> responses = ticketRepository.searchPosts(query);
+
+        if (responses.isEmpty()) {
+            throw new EntityNotFoundException("No posts found for the given query: " + query);
+        }
+
+        return responses.stream()
+                .map(post -> modelMapper.map(post, TicketResponse.class))
+                .collect(Collectors.toList());
+    }
+
+    public Page<TicketResponse> getAppListByPageable(Pageable pageable) {
+        Page<Ticket> tickets = ticketRepository.findAll(pageable);
+        return tickets.map(appList -> modelMapper.map(appList, TicketResponse.class));
     }
 }

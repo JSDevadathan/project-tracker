@@ -18,5 +18,4 @@ public class TicketResponse {
     private String description;
     private String acceptanceCriteria;
     private Long categoryId;
-    private String categoryName;
 }

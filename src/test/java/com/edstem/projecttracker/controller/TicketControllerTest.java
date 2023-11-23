@@ -1,20 +1,29 @@
 package com.edstem.projecttracker.controller;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.edstem.projecttracker.contract.request.TicketRequest;
 import com.edstem.projecttracker.contract.response.TicketResponse;
 import com.edstem.projecttracker.model.Category;
+import com.edstem.projecttracker.repository.CategoryRepository;
+import com.edstem.projecttracker.repository.TicketRepository;
 import com.edstem.projecttracker.service.TicketService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -33,7 +42,6 @@ class TicketControllerTest {
         when(ticketService.createTicket(Mockito.<TicketRequest>any())).thenReturn(TicketResponse.builder()
                 .acceptanceCriteria("Acceptance Criteria")
                 .categoryId(1L)
-                .categoryName("Category Name")
                 .description("The characteristics of someone or something")
                 .ticketId(1L)
                 .title("Dr")
@@ -46,7 +54,6 @@ class TicketControllerTest {
 
         TicketRequest ticketRequest = new TicketRequest();
         ticketRequest.setAcceptanceCriteria("Acceptance Criteria");
-        ticketRequest.setCategory(category);
         ticketRequest.setCategoryId(1L);
         ticketRequest.setDescription("The characteristics of someone or something");
         ticketRequest.setTitle("Dr");
@@ -62,7 +69,7 @@ class TicketControllerTest {
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
                                 "{\"ticketId\":1,\"title\":\"Dr\",\"description\":\"The characteristics of someone or something\",\"acceptanceCriteria"
-                                        + "\":\"Acceptance Criteria\",\"categoryId\":1,\"categoryName\":\"Category Name\"}"));
+                                        + "\":\"Acceptance Criteria\",\"categoryId\":1}"));
     }
 
 
@@ -114,7 +121,6 @@ class TicketControllerTest {
                 .thenReturn(TicketResponse.builder()
                         .acceptanceCriteria("Acceptance Criteria")
                         .categoryId(1L)
-                        .categoryName("Category Name")
                         .description("The characteristics of someone or something")
                         .ticketId(1L)
                         .title("Dr")
@@ -127,7 +133,6 @@ class TicketControllerTest {
 
         TicketRequest ticketRequest = new TicketRequest();
         ticketRequest.setAcceptanceCriteria("Acceptance Criteria");
-        ticketRequest.setCategory(category);
         ticketRequest.setCategoryId(1L);
         ticketRequest.setDescription("The characteristics of someone or something");
         ticketRequest.setTitle("Dr");
@@ -143,7 +148,7 @@ class TicketControllerTest {
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
                                 "{\"ticketId\":1,\"title\":\"Dr\",\"description\":\"The characteristics of someone or something\",\"acceptanceCriteria"
-                                        + "\":\"Acceptance Criteria\",\"categoryId\":1,\"categoryName\":\"Category Name\"}"));
+                                        + "\":\"Acceptance Criteria\",\"categoryId\":1}"));
     }
 
     @Test
@@ -155,5 +160,29 @@ class TicketControllerTest {
                 .build()
                 .perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    void testSearchPosts() throws Exception {
+        when(ticketService.searchPosts(Mockito.<String>any())).thenReturn(new ArrayList<>());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/tickets/search").param("query", "foo");
+        MockMvcBuilders.standaloneSetup(ticketController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content().string("[]"));
+    }
+
+    @Test
+    void testGetPostsByPageable() {
+
+        TicketRepository ticketRepository = mock(TicketRepository.class);
+        when(ticketRepository.findAll(Mockito.<Pageable>any())).thenReturn(new PageImpl<>(new ArrayList<>()));
+        CategoryRepository categoryRepository = mock(CategoryRepository.class);
+        Page<TicketResponse> actualPostsByPageable = (new TicketController(
+                new TicketService(ticketRepository, categoryRepository, new ModelMapper()))).getPostsByPageable(null);
+        verify(ticketRepository).findAll(Mockito.<Pageable>any());
+        assertTrue(actualPostsByPageable.toList().isEmpty());
     }
 }
