@@ -1,11 +1,5 @@
 package com.edstem.projecttracker.controller;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import com.edstem.projecttracker.contract.request.TicketRequest;
 import com.edstem.projecttracker.contract.response.TicketResponse;
 import com.edstem.projecttracker.model.Category;
@@ -13,7 +7,6 @@ import com.edstem.projecttracker.repository.CategoryRepository;
 import com.edstem.projecttracker.repository.TicketRepository;
 import com.edstem.projecttracker.service.TicketService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
@@ -30,12 +23,22 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 class TicketControllerTest {
-    @Autowired private TicketController ticketController;
+    @Autowired
+    private TicketController ticketController;
 
-    @MockBean private TicketService ticketService;
+    @MockBean
+    private TicketService ticketService;
 
     @Test
     void testCreateTicket() throws Exception {
@@ -72,7 +75,6 @@ class TicketControllerTest {
     }
 
 
-
     @Test
     void testViewTicket() throws Exception {
         when(ticketService.viewTicket()).thenReturn(new ArrayList<>());
@@ -98,7 +100,6 @@ class TicketControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
-
 
 
     @Test

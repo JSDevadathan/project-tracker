@@ -2,7 +2,6 @@ package com.edstem.projecttracker.repository;
 
 import com.edstem.projecttracker.model.Category;
 import com.edstem.projecttracker.model.Ticket;
-import org.springdoc.core.converters.models.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

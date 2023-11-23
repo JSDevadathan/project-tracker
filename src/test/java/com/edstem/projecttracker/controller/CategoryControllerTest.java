@@ -1,13 +1,9 @@
 package com.edstem.projecttracker.controller;
 
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
-
 import com.edstem.projecttracker.contract.request.CategoryRequest;
 import com.edstem.projecttracker.contract.response.CategoryResponse;
 import com.edstem.projecttracker.service.CategoryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +16,19 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
+
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 class CategoryControllerTest {
-    @Autowired private CategoryController categoryController;
+    @Autowired
+    private CategoryController categoryController;
 
-    @MockBean private CategoryService categoryService;
+    @MockBean
+    private CategoryService categoryService;
 
     @Test
     void testCreateCategory() throws Exception {

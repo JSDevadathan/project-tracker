@@ -5,11 +5,12 @@ import com.edstem.projecttracker.contract.response.CategoryResponse;
 import com.edstem.projecttracker.expection.EntityNotFoundException;
 import com.edstem.projecttracker.model.Category;
 import com.edstem.projecttracker.repository.CategoryRepository;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

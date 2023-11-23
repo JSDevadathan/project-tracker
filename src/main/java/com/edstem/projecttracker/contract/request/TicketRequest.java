@@ -1,6 +1,5 @@
 package com.edstem.projecttracker.contract.request;
 
-import com.edstem.projecttracker.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
