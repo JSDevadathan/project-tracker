@@ -16,7 +16,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"Ticket WWWZZ\",\r\n    \"description\": \"Ticket Requirements\",\r\n    \"acceptanceCriteria\": \"Acceptance Criteria\",\r\n    \"categoryId\": 1\r\n}\r\n",
+					"raw": "{\r\n    \"title\": \"Ticket--)\",\r\n    \"description\": \"Ticket2 Requirements\",\r\n    \"acceptanceCriteria\": \"Acceptance Criteria\",\r\n    \"categoryId\": 2\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -40,84 +40,6 @@
 			"response": []
 		},
 		{
-			"name": "Category Submit",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"User\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": "http://localhost:8080/category/create"
-			},
-			"response": []
-		},
-		{
-			"name": "View Ticket By Category",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": "http://localhost:8080/tickets/categories/3"
-			},
-			"response": []
-		},
-		{
-			"name": "Update Category",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"JS\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": "http://localhost:8080/category/categories/1"
-			},
-			"response": []
-		},
-		{
-			"name": "View All Category",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": "http://localhost:8080/category/view"
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Category",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": "http://localhost:8080/category/categories/2"
-			},
-			"response": []
-		},
-		{
 			"name": "Update Ticket",
 			"request": {
 				"auth": {
@@ -127,14 +49,14 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"Ticket 52\",\r\n    \"description\": \"Ticket Requirements\",\r\n    \"acceptanceCriteria\": \"Acceptance Criteria\",\r\n    \"category\":{\r\n        \"categoryId\": 1\r\n    }\r\n}",
+					"raw": "{\r\n    \"title\": \"AAAA\",\r\n    \"description\": \"bbb Requirements\",\r\n    \"acceptanceCriteria\": \"ccc Criteria 4\",\r\n    \"categoryId\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/tickets/5"
+				"url": "http://localhost:8080/tickets/14"
 			},
 			"response": []
 		},
@@ -160,6 +82,39 @@
 			"response": []
 		},
 		{
+			"name": "Category Submit",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Non-Administrative\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/category/create"
+			},
+			"response": []
+		},
+		{
+			"name": "View Ticket By CategoryId",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/tickets/categories/2"
+			},
+			"response": []
+		},
+		{
 			"name": "View By Category Name",
 			"request": {
 				"auth": {
@@ -167,7 +122,52 @@
 				},
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/tickets/categories/name/User"
+				"url": "http://localhost:8080/tickets/categories/name/Administrative"
+			},
+			"response": []
+		},
+		{
+			"name": "View All Category",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/category/view"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Category",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"JS\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/category/categories/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Category",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8080/category/categories/2"
 			},
 			"response": []
 		},
@@ -181,7 +181,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"text\": \"Comment R\",\r\n    \"ticketId\": 3\r\n}",
+					"raw": "{\r\n    \"text\": \"JS\",\r\n    \"ticketId\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -213,6 +213,72 @@
 				"method": "DELETE",
 				"header": [],
 				"url": "http://localhost:8080/comments/4"
+			},
+			"response": []
+		},
+		{
+			"name": "Search",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/tickets/search?query=*",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tickets",
+						"search"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "*"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pagination",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/tickets/pageable?page=0&size=5&sort=ticketId,asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tickets",
+						"pageable"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "5"
+						},
+						{
+							"key": "sort",
+							"value": "ticketId,asc"
+						}
+					]
+				}
 			},
 			"response": []
 		}

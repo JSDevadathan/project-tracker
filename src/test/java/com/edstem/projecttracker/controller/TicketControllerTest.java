@@ -50,7 +50,6 @@ class TicketControllerTest {
         Category category = new Category();
         category.setCategoryId(1L);
         category.setName("Name");
-        category.setTickets(new ArrayList<>());
 
         TicketRequest ticketRequest = new TicketRequest();
         ticketRequest.setAcceptanceCriteria("Acceptance Criteria");
@@ -69,7 +68,7 @@ class TicketControllerTest {
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
                                 "{\"ticketId\":1,\"title\":\"Dr\",\"description\":\"The characteristics of someone or something\",\"acceptanceCriteria"
-                                        + "\":\"Acceptance Criteria\",\"categoryId\":1}"));
+                                        + "\":\"Acceptance Criteria\",\"categoryId\":1,\"comments\":null}"));
     }
 
 
@@ -129,7 +128,6 @@ class TicketControllerTest {
         Category category = new Category();
         category.setCategoryId(1L);
         category.setName("Name");
-        category.setTickets(new ArrayList<>());
 
         TicketRequest ticketRequest = new TicketRequest();
         ticketRequest.setAcceptanceCriteria("Acceptance Criteria");
@@ -148,7 +146,7 @@ class TicketControllerTest {
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
                                 "{\"ticketId\":1,\"title\":\"Dr\",\"description\":\"The characteristics of someone or something\",\"acceptanceCriteria"
-                                        + "\":\"Acceptance Criteria\",\"categoryId\":1}"));
+                                        + "\":\"Acceptance Criteria\",\"categoryId\":1,\"comments\":null}"));
     }
 
     @Test

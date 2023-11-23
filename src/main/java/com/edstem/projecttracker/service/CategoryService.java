@@ -39,12 +39,8 @@ public class CategoryService {
                 categoryRepository
                         .findById(id)
                         .orElseThrow(() -> new EntityNotFoundException("Category not found"));
-        category =
-                Category.builder()
-                        .categoryId(category.getCategoryId())
-                        .name(categoryRequestDto.getName())
-                        .tickets(category.getTickets())
-                        .build();
+
+        category.setName(categoryRequestDto.getName());
         category = categoryRepository.save(category);
         return convertToDto(category);
     }

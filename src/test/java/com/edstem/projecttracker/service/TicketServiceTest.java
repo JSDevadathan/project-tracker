@@ -19,12 +19,14 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -51,7 +53,6 @@ class TicketServiceTest {
         Category category = new Category();
         category.setCategoryId(1L);
         category.setName("Name");
-        category.setTickets(new ArrayList<>());
 
         Ticket ticket = new Ticket();
         ticket.setAcceptanceCriteria("Acceptance Criteria");
@@ -65,7 +66,6 @@ class TicketServiceTest {
         Category category2 = new Category();
         category2.setCategoryId(1L);
         category2.setName("Name");
-        category2.setTickets(new ArrayList<>());
         Optional<Category> ofResult = Optional.of(category2);
         when(categoryRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
         when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any()))
@@ -80,7 +80,6 @@ class TicketServiceTest {
         Category category3 = new Category();
         category3.setCategoryId(1L);
         category3.setName("Name");
-        category3.setTickets(new ArrayList<>());
         ticketService.createTicket(TicketRequest.builder()
                 .acceptanceCriteria("Acceptance Criteria")
                 .categoryId(1L)
@@ -127,10 +126,15 @@ class TicketServiceTest {
 
     @Test
     void testGetTicketsByCategoryId() {
-        Category.CategoryBuilder nameResult = Category.builder().categoryId(1L).name("Name");
-        Optional<Category> ofResult = Optional.of(nameResult.tickets(new ArrayList<>()).build());
+        when(ticketRepository.findByCategory_CategoryId(Mockito.<Long>any())).thenReturn(new ArrayList<>());
+
+        Category category = new Category();
+        category.setCategoryId(1L);
+        category.setName("Name");
+        Optional<Category> ofResult = Optional.of(category);
         when(categoryRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
         List<TicketResponse> actualTicketsByCategoryId = ticketService.getTicketsByCategoryId(1L);
+        verify(ticketRepository).findByCategory_CategoryId(Mockito.<Long>any());
         verify(categoryRepository).findById(Mockito.<Long>any());
         assertTrue(actualTicketsByCategoryId.isEmpty());
     }
@@ -145,20 +149,37 @@ class TicketServiceTest {
 
     @Test
     void testGetTicketsByCategoryName() {
-        Category.CategoryBuilder nameResult = Category.builder().categoryId(1L).name("Name");
-        when(categoryRepository.findByName(Mockito.<String>any()))
-                .thenReturn(nameResult.tickets(new ArrayList<>()).build());
+        when(ticketRepository.findByCategory(Mockito.<Category>any())).thenReturn(new ArrayList<>());
+
+        Category category = new Category();
+        category.setCategoryId(1L);
+        category.setName("Name");
+        Optional<Category> ofResult = Optional.of(category);
+        when(categoryRepository.findByName(Mockito.<String>any())).thenReturn(ofResult);
         List<TicketResponse> actualTicketsByCategoryName = ticketService.getTicketsByCategoryName("Name");
         verify(categoryRepository).findByName(Mockito.<String>any());
+        verify(ticketRepository).findByCategory(Mockito.<Category>any());
         assertTrue(actualTicketsByCategoryName.isEmpty());
     }
 
     @Test
-    void testUpdateTicket2() {
+    public void testGetTicketsByCategoryNameThrowsEntityNotFoundException() {
+        // Arrange
+        String categoryName = "NonExistentCategory";
+        when(categoryRepository.findByName(anyString())).thenReturn(Optional.empty());
+
+        // Assert
+        assertThrows(EntityNotFoundException.class, () -> {
+            // Act
+            ticketService.getTicketsByCategoryName(categoryName);
+        });
+    }
+
+    @Test
+    void testUpdateTicket() {
         Category category = new Category();
         category.setCategoryId(1L);
         category.setName("Name");
-        category.setTickets(new ArrayList<>());
 
         Ticket ticket = new Ticket();
         ticket.setAcceptanceCriteria("Acceptance Criteria");
@@ -172,7 +193,6 @@ class TicketServiceTest {
         Category category2 = new Category();
         category2.setCategoryId(1L);
         category2.setName("Name");
-        category2.setTickets(new ArrayList<>());
 
         Ticket ticket2 = new Ticket();
         ticket2.setAcceptanceCriteria("Acceptance Criteria");
@@ -187,7 +207,6 @@ class TicketServiceTest {
         Category category3 = new Category();
         category3.setCategoryId(1L);
         category3.setName("Name");
-        category3.setTickets(new ArrayList<>());
         Optional<Category> ofResult2 = Optional.of(category3);
         when(categoryRepository.findById(Mockito.<Long>any())).thenReturn(ofResult2);
         when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any()))
@@ -202,7 +221,6 @@ class TicketServiceTest {
         Category category4 = new Category();
         category4.setCategoryId(1L);
         category4.setName("Name");
-        category4.setTickets(new ArrayList<>());
 
         TicketRequest ticketRequestDto = new TicketRequest();
         ticketService.updateTicket(1L, ticketRequestDto);
@@ -223,11 +241,10 @@ class TicketServiceTest {
     }
 
     @Test
-    void testSearchPosts4() {
+    void testSearchPosts() {
         Category category = new Category();
         category.setCategoryId(1L);
         category.setName("Name");
-        category.setTickets(new ArrayList<>());
 
         Ticket ticket = new Ticket();
         ticket.setAcceptanceCriteria("Acceptance Criteria");
@@ -245,6 +262,19 @@ class TicketServiceTest {
         assertThrows(EntityNotFoundException.class, () -> ticketService.searchPosts("Query"));
         verify(ticketRepository).searchPosts(Mockito.<String>any());
         verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any());
+    }
+
+    @Test
+    public void testSearchPostsThrowsEntityNotFoundException() {
+        // Arrange
+        String query = "NonExistentQuery";
+        when(ticketRepository.searchPosts(anyString())).thenReturn(Collections.emptyList());
+
+        // Assert
+        assertThrows(EntityNotFoundException.class, () -> {
+            // Act
+            ticketService.searchPosts(query);
+        });
     }
 
     @Test

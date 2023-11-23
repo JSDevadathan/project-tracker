@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,7 +57,9 @@ public class TicketService {
                                 () ->
                                         new EntityNotFoundException(
                                                 "Category not found", +categoryId));
-        List<Ticket> tickets = category.getTickets();
+
+        List<Ticket> tickets = ticketRepository.findByCategory_CategoryId(categoryId);
+
         return tickets.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
@@ -75,11 +78,13 @@ public class TicketService {
     }
 
     public List<TicketResponse> getTicketsByCategoryName(String name) {
-        Category category = categoryRepository.findByName(name);
-        List<Ticket> tickets = category.getTickets();
-        return tickets.stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
+        Optional<Category> optionalCategory = categoryRepository.findByName(name);
+        if (!optionalCategory.isPresent()) {
+            throw new EntityNotFoundException("Category not found: " + name);
+        }
+        Category category = optionalCategory.get();
+        List<Ticket> tickets = ticketRepository.findByCategory(category);
+        return tickets.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
     public void deleteTicket(Long id) {

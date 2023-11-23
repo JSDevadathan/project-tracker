@@ -51,12 +51,11 @@ class CommentServiceTest {
     void testCreateComment() {
         when(commentRepository.save(Mockito.<Comment>any())).thenReturn(new Comment());
         when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<CommentResponse>>any()))
-                .thenReturn(CommentResponse.builder().commentId(1L).text("Text").ticketId(1L).build());
+                .thenReturn(CommentResponse.builder().commentId(1L).text("Text").build());
 
         Category category = new Category();
         category.setCategoryId(1L);
         category.setName("Name");
-        category.setTickets(new ArrayList<>());
 
         Ticket ticket = new Ticket();
         ticket.setAcceptanceCriteria("Acceptance Criteria");
@@ -80,7 +79,7 @@ class CommentServiceTest {
         commentList.add(new Comment());
         when(commentRepository.findAll()).thenReturn(commentList);
         when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<CommentResponse>>any()))
-                .thenReturn(CommentResponse.builder().commentId(1L).text("Text").ticketId(1L).build());
+                .thenReturn(CommentResponse.builder().commentId(1L).text("Text").build());
         List<CommentResponse> actualViewAllCommentsResult = commentService.viewAllComments();
         verify(modelMapper, atLeast(1)).map(Mockito.<Object>any(), Mockito.<Class<CommentResponse>>any());
         verify(commentRepository).findAll();
