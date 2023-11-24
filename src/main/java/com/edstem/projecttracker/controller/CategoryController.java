@@ -24,8 +24,8 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping("/create")
-    public CategoryResponse createCategory(@RequestBody CategoryRequest categoryRequestDto) {
-        return categoryService.createCategory(categoryRequestDto);
+    public CategoryResponse createCategory(@RequestBody CategoryRequest categoryRequest) {
+        return categoryService.createCategory(categoryRequest);
     }
 
     @GetMapping("/view")
@@ -35,8 +35,8 @@ public class CategoryController {
 
     @PutMapping("/categories/{id}")
     public CategoryResponse updateCategory(
-            @PathVariable Long id, @RequestBody CategoryRequest categoryRequestDto) {
-        return categoryService.updateCategory(id, categoryRequestDto);
+            @PathVariable Long id, @RequestBody CategoryRequest categoryRequest) {
+        return categoryService.updateCategory(id, categoryRequest);
     }
 
     @DeleteMapping("/categories/{id}")

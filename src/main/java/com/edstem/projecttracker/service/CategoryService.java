@@ -18,8 +18,8 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final ModelMapper modelMapper;
 
-    public CategoryResponse createCategory(CategoryRequest categoryRequestDto) {
-        Category category = Category.builder().name(categoryRequestDto.getName()).build();
+    public CategoryResponse createCategory(CategoryRequest categoryRequest) {
+        Category category = Category.builder().name(categoryRequest.getName()).build();
         category = categoryRepository.save(category);
         return convertToDto(category);
     }
@@ -35,13 +35,13 @@ public class CategoryService {
                 .collect(Collectors.toList());
     }
 
-    public CategoryResponse updateCategory(Long id, CategoryRequest categoryRequestDto) {
+    public CategoryResponse updateCategory(Long id, CategoryRequest categoryRequest) {
         Category category =
                 categoryRepository
                         .findById(id)
                         .orElseThrow(() -> new EntityNotFoundException("Category not found"));
 
-        category.setName(categoryRequestDto.getName());
+        category.setName(categoryRequest.getName());
         category = categoryRepository.save(category);
         return convertToDto(category);
     }

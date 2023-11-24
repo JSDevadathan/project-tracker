@@ -29,8 +29,8 @@ public class TicketController {
     private final TicketService ticketService;
 
     @PostMapping("/create")
-    public TicketResponse createTicket(@RequestBody TicketRequest ticketRequestDto) {
-        return ticketService.createTicket(ticketRequestDto);
+    public TicketResponse createTicket(@RequestBody TicketRequest ticketRequest) {
+        return ticketService.createTicket(ticketRequest);
     }
 
     @GetMapping("/view")
@@ -45,8 +45,8 @@ public class TicketController {
 
     @PutMapping("/{id}")
     public TicketResponse updateTicket(
-            @PathVariable Long id, @RequestBody TicketRequest ticketRequestDto) {
-        return ticketService.updateTicket(id, ticketRequestDto);
+            @PathVariable Long id, @RequestBody TicketRequest ticketRequest) {
+        return ticketService.updateTicket(id, ticketRequest);
     }
 
     @GetMapping("/categories/name/{name}")

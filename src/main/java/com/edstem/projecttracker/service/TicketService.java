@@ -24,13 +24,13 @@ public class TicketService {
     private final CategoryRepository categoryRepository;
     private final ModelMapper modelMapper;
 
-    public TicketResponse createTicket(TicketRequest ticketRequestDto) {
+    public TicketResponse createTicket(TicketRequest ticketRequest) {
         Category category =
-                categoryRepository.findById(ticketRequestDto.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
+                categoryRepository.findById(ticketRequest.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
         Ticket ticket = Ticket.builder()
-                .title(ticketRequestDto.getTitle())
-                .description(ticketRequestDto.getDescription())
-                .acceptanceCriteria(ticketRequestDto.getAcceptanceCriteria())
+                .title(ticketRequest.getTitle())
+                .description(ticketRequest.getDescription())
+                .acceptanceCriteria(ticketRequest.getAcceptanceCriteria())
                 .category(category)
                 .build();
         ticket = ticketRepository.save(ticket);
@@ -63,14 +63,14 @@ public class TicketService {
         return tickets.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    public TicketResponse updateTicket(Long id, TicketRequest ticketRequestDto) {
+    public TicketResponse updateTicket(Long id, TicketRequest ticketRequest) {
         Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new RuntimeException("Ticket not found"));
-        Category category = categoryRepository.findById(ticketRequestDto.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
+        Category category = categoryRepository.findById(ticketRequest.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
         ticket = Ticket.builder()
                 .ticketId(ticket.getTicketId())
-                .title(ticketRequestDto.getTitle())
-                .description(ticketRequestDto.getDescription())
-                .acceptanceCriteria(ticketRequestDto.getAcceptanceCriteria())
+                .title(ticketRequest.getTitle())
+                .description(ticketRequest.getDescription())
+                .acceptanceCriteria(ticketRequest.getAcceptanceCriteria())
                 .category(category)
                 .build();
         ticket = ticketRepository.save(ticket);
