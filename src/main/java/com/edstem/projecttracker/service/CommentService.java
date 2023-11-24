@@ -22,7 +22,7 @@ public class CommentService {
     private final TicketRepository ticketRepository;
 
     public CommentResponse createComment(CommentRequest commentRequest) {
-        Ticket ticket = ticketRepository.findById(commentRequest.getTicketId()).orElseThrow(() -> new RuntimeException("Ticket not found"));
+        Ticket ticket = ticketRepository.findById(commentRequest.getTicketId()).orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
         Comment comment = Comment.builder()
                 .text(commentRequest.getText())
                 .ticket(ticket)

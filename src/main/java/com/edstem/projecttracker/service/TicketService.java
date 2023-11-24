@@ -26,7 +26,7 @@ public class TicketService {
 
     public TicketResponse createTicket(TicketRequest ticketRequest) {
         Category category =
-                categoryRepository.findById(ticketRequest.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
+                categoryRepository.findById(ticketRequest.getCategoryId()).orElseThrow(() -> new EntityNotFoundException("Category not found"));
         Ticket ticket = Ticket.builder()
                 .title(ticketRequest.getTitle())
                 .description(ticketRequest.getDescription())
@@ -64,7 +64,7 @@ public class TicketService {
     }
 
     public TicketResponse updateTicket(Long id, TicketRequest ticketRequest) {
-        Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new RuntimeException("Ticket not found"));
+        Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
         Category category = categoryRepository.findById(ticketRequest.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
         ticket = Ticket.builder()
                 .ticketId(ticket.getTicketId())
