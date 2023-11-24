@@ -92,19 +92,6 @@ class TicketServiceTest {
 
 
     @Test
-    void testConvertToDto() {
-        when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any()))
-                .thenReturn(TicketResponse.builder()
-                        .acceptanceCriteria("The characteristics of someone or something")
-                        .categoryId(1L)
-                        .description("Description")
-                        .title("Dr")
-                        .build());
-        ticketService.convertToDto(new Ticket());
-        verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any());
-    }
-
-    @Test
     void testViewTicket() {
         ArrayList<Ticket> ticketList = new ArrayList<>();
         ticketList.add(new Ticket());

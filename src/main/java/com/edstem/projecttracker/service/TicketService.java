@@ -34,10 +34,6 @@ public class TicketService {
                 .category(category)
                 .build();
         ticket = ticketRepository.save(ticket);
-        return convertToDto(ticket);
-    }
-
-    public TicketResponse convertToDto(Ticket ticket) {
         return modelMapper.map(ticket, TicketResponse.class);
     }
 
@@ -60,7 +56,9 @@ public class TicketService {
 
         List<Ticket> tickets = ticketRepository.findByCategoryCategoryId(categoryId);
 
-        return tickets.stream().map(this::convertToDto).collect(Collectors.toList());
+        return tickets.stream()
+                .map(ticket ->modelMapper.map(ticket, TicketResponse.class))
+                        .collect(Collectors.toList());
     }
 
     public TicketResponse updateTicket(Long id, TicketRequest ticketRequest) {
@@ -74,7 +72,7 @@ public class TicketService {
                 .category(category)
                 .build();
         ticket = ticketRepository.save(ticket);
-        return convertToDto(ticket);
+        return modelMapper.map(ticket, TicketResponse.class);
     }
 
     public List<TicketResponse> getTicketsByCategoryName(String name) {
@@ -84,7 +82,9 @@ public class TicketService {
         }
         Category category = optionalCategory.get();
         List<Ticket> tickets = ticketRepository.findByCategory(category);
-        return tickets.stream().map(this::convertToDto).collect(Collectors.toList());
+        return tickets.stream()
+                .map(ticket ->modelMapper.map(ticket, TicketResponse.class))
+                        .collect(Collectors.toList());
     }
 
     public void deleteTicket(Long id) {
