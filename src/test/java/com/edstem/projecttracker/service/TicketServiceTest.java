@@ -125,7 +125,7 @@ class TicketServiceTest {
 
     @Test
     void testGetTicketsByCategoryId() {
-        when(ticketRepository.findByCategory_CategoryId(Mockito.<Long>any())).thenReturn(new ArrayList<>());
+        when(ticketRepository.findByCategoryCategoryId(Mockito.<Long>any())).thenReturn(new ArrayList<>());
 
         Category category = new Category();
         category.setCategoryId(1L);
@@ -133,7 +133,7 @@ class TicketServiceTest {
         Optional<Category> ofResult = Optional.of(category);
         when(categoryRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
         List<TicketResponse> actualTicketsByCategoryId = ticketService.getTicketsByCategoryId(1L);
-        verify(ticketRepository).findByCategory_CategoryId(Mockito.<Long>any());
+        verify(ticketRepository).findByCategoryCategoryId(Mockito.<Long>any());
         verify(categoryRepository).findById(Mockito.<Long>any());
         assertTrue(actualTicketsByCategoryId.isEmpty());
     }

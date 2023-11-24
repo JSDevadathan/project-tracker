@@ -58,7 +58,7 @@ public class TicketService {
                                         new EntityNotFoundException(
                                                 "Category not found", +categoryId));
 
-        List<Ticket> tickets = ticketRepository.findByCategory_CategoryId(categoryId);
+        List<Ticket> tickets = ticketRepository.findByCategoryCategoryId(categoryId);
 
         return tickets.stream().map(this::convertToDto).collect(Collectors.toList());
     }

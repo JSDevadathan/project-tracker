@@ -18,7 +18,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             "OR p.category.name LIKE LOWER(CONCAT('%', :query, '%'))")
     List<Ticket> searchPosts(String query);
 
-    List<Ticket> findByCategory_CategoryId(Long categoryId);
+    List<Ticket> findByCategoryCategoryId(Long categoryId);
 
     List<Ticket> findByCategory(Category category);
 }
