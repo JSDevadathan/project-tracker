@@ -16,7 +16,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"Ticket--)\",\r\n    \"description\": \"Ticket2 Requirements\",\r\n    \"acceptanceCriteria\": \"Acceptance Criteria\",\r\n    \"categoryId\": 2\r\n}\r\n",
+					"raw": "{\r\n    \"title\": \"Ticket--)JSDDDDDEEv\",\r\n    \"description\": \"Ticket2 Requirements\",\r\n    \"acceptanceCriteria\": \"Acceptance Criteria\",\r\n    \"categoryId\": 3\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -49,14 +49,14 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"AAAA\",\r\n    \"description\": \"bbb Requirements\",\r\n    \"acceptanceCriteria\": \"ccc Criteria 4\",\r\n    \"categoryId\": 1\r\n}",
+					"raw": "{\r\n    \"title\": \"JSDDDDDvvv\",\r\n    \"description\": \"bbb Requirements\",\r\n    \"acceptanceCriteria\": \"ccc Criteria 4\",\r\n    \"categoryId\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/tickets/14"
+				"url": "http://localhost:8080/tickets/8"
 			},
 			"response": []
 		},
@@ -91,7 +91,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Non-Administrative\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Demo\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -110,7 +110,7 @@
 				},
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/tickets/categories/2"
+				"url": "http://localhost:8080/tickets/categories/3"
 			},
 			"response": []
 		},
@@ -122,7 +122,7 @@
 				},
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/tickets/categories/name/Administrative"
+				"url": "http://localhost:8080/tickets/categories/name/JS"
 			},
 			"response": []
 		},
@@ -139,39 +139,6 @@
 			"response": []
 		},
 		{
-			"name": "Update Category",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"JS\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": "http://localhost:8080/category/categories/1"
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Category",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": "http://localhost:8080/category/categories/2"
-			},
-			"response": []
-		},
-		{
 			"name": "Create Comment",
 			"request": {
 				"auth": {
@@ -181,7 +148,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"text\": \"JS\",\r\n    \"ticketId\": 1\r\n}",
+					"raw": "{\r\n    \"text\": \"JS DDDDEE\",\r\n    \"ticketId\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -217,7 +184,7 @@
 			"response": []
 		},
 		{
-			"name": "Search",
+			"name": "Search and Pagination",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -225,7 +192,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/tickets/search?query=*",
+					"raw": "http://localhost:8080/tickets/search?query=*&page=0&size=2&sort=id,asc",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -239,43 +206,18 @@
 						{
 							"key": "query",
 							"value": "*"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Pagination",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/tickets/pageable?page=0&size=5&sort=ticketId,asc",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"tickets",
-						"pageable"
-					],
-					"query": [
+						},
 						{
 							"key": "page",
 							"value": "0"
 						},
 						{
 							"key": "size",
-							"value": "5"
+							"value": "2"
 						},
 						{
 							"key": "sort",
-							"value": "ticketId,asc"
+							"value": "id,asc"
 						}
 					]
 				}

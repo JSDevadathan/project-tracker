@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,9 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor()
+@RequiredArgsConstructor
 @RequestMapping("/tickets")
-@CrossOrigin("*")
 public class TicketController {
     private final TicketService ticketService;
 
@@ -60,13 +58,8 @@ public class TicketController {
     }
 
     @GetMapping("/search")
-    public List<TicketResponse> searchPosts(@RequestParam("query") String query) {
-        return ticketService.searchPosts(query);
-    }
-
-    @GetMapping("/pageable")
-    public Page<TicketResponse> getPostsByPageable(
-            @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
-        return ticketService.getAppListByPageable(pageable);
+    public Page<TicketResponse> SearchPagination(@RequestParam("query") String query,
+                                                 @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        return ticketService.SearchPagination(query, pageable);
     }
 }

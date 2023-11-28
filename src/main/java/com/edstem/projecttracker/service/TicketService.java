@@ -14,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,7 +38,7 @@ public class TicketService {
 
 
     public List<TicketResponse> viewTicket() {
-        List<Ticket> userProfiles = (List<Ticket>) ticketRepository.findAll();
+        List<Ticket> userProfiles = ticketRepository.findAll();
         return userProfiles.stream()
                 .map(user -> modelMapper.map(user, TicketResponse.class))
                 .collect(Collectors.toList());
@@ -57,8 +56,8 @@ public class TicketService {
         List<Ticket> tickets = ticketRepository.findByCategoryCategoryId(categoryId);
 
         return tickets.stream()
-                .map(ticket ->modelMapper.map(ticket, TicketResponse.class))
-                        .collect(Collectors.toList());
+                .map(ticket -> modelMapper.map(ticket, TicketResponse.class))
+                .collect(Collectors.toList());
     }
 
     public TicketResponse updateTicket(Long id, TicketRequest ticketRequest) {
@@ -76,15 +75,11 @@ public class TicketService {
     }
 
     public List<TicketResponse> getTicketsByCategoryName(String name) {
-        Optional<Category> optionalCategory = categoryRepository.findByName(name);
-        if (!optionalCategory.isPresent()) {
-            throw new EntityNotFoundException("Category not found: " + name);
-        }
-        Category category = optionalCategory.get();
+        Category category = categoryRepository.findByName(name).orElseThrow();
         List<Ticket> tickets = ticketRepository.findByCategory(category);
         return tickets.stream()
-                .map(ticket ->modelMapper.map(ticket, TicketResponse.class))
-                        .collect(Collectors.toList());
+                .map(ticket -> modelMapper.map(ticket, TicketResponse.class))
+                .collect(Collectors.toList());
     }
 
     public void deleteTicket(Long id) {
@@ -95,20 +90,13 @@ public class TicketService {
         ticketRepository.delete(ticket);
     }
 
-    public List<TicketResponse> searchPosts(String query) {
-        List<Ticket> responses = ticketRepository.searchPosts(query);
+    public Page<TicketResponse> SearchPagination(String query, Pageable pageable) {
+        Page<Ticket> tickets = ticketRepository.searchPosts(query, pageable);
 
-        if (responses.isEmpty()) {
+        if (tickets.isEmpty()) {
             throw new EntityNotFoundException("Ticket found for the given query: " + query);
         }
 
-        return responses.stream()
-                .map(ticket -> modelMapper.map(ticket, TicketResponse.class))
-                .collect(Collectors.toList());
-    }
-
-    public Page<TicketResponse> getAppListByPageable(Pageable pageable) {
-        Page<Ticket> tickets = ticketRepository.findAll(pageable);
-        return tickets.map(appList -> modelMapper.map(appList, TicketResponse.class));
+        return tickets.map(ticket -> modelMapper.map(ticket, TicketResponse.class));
     }
 }

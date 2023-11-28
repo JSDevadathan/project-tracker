@@ -43,15 +43,10 @@ The Project Tracker Application is a versatile tool designed to maintain project
 - **Method:** DELETE
 - **Description:** Delete a specific tickets by its ID.
 
-### Search Ticket Details
+### Search Ticket Details with Pagination
 - **Endpoint:** `/tickets/search`
 - **Method:** GET
-- **Description:** Search ticket details.
-
-### Pagination Ticket
-- **Endpoint:** `/tickets/pageable`
-- **Method:** GET
-- **Description:** Sort the tickets with page number.
+- **Description:** Search ticket details with Pagination.
 
 ### Create category
 - **Endpoint:** `/category/create`
@@ -62,16 +57,6 @@ The Project Tracker Application is a versatile tool designed to maintain project
 - **Endpoint:** `/category/view`
 - **Method:** GET
 - **Description:** Retrieve a list of all category.
-
-### Update category by ID
-- **Endpoint:** `/category/categories/{id}`
-- **Method:** PUT
-- **Description:** Update an existing category's details by its ID.
-
-### Delete category
-- **Endpoint:** `/category/categories/{id}`
-- **Method:** DELETE
-- **Description:** Delete a specific category by its ID.
 
 ### Create comment
 - **Endpoint:** `/comments`

@@ -42,28 +42,37 @@ class CommentServiceTest {
 
     @Test
     void testCreateComment() {
-        when(commentRepository.save(Mockito.<Comment>any())).thenReturn(new Comment());
-        when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<CommentResponse>>any()))
+        when(commentRepository.save(Mockito.any())).thenReturn(new Comment());
+        when(modelMapper.map(Mockito.any(), Mockito.any()))
                 .thenReturn(CommentResponse.builder().commentId(1L).text("Text").build());
 
-        Category category = new Category();
-        category.setCategoryId(1L);
-        category.setName("Name");
+        Category category = Category.builder()
+                .categoryId(1L)
+                .name("Name")
+                .build();
 
-        Ticket ticket = new Ticket();
-        ticket.setAcceptanceCriteria("Acceptance Criteria");
-        ticket.setCategory(category);
-        ticket.setComments(new ArrayList<>());
-        ticket.setDescription("The characteristics of someone or something");
-        ticket.setTicketId(1L);
-        ticket.setTitle("Dr");
+        Ticket ticket = Ticket.builder()
+                .acceptanceCriteria("Acceptance Criteria")
+                .category(category)
+                .comments(new ArrayList<>())
+                .description("The characteristics of someone or something")
+                .ticketId(1L)
+                .title("Dr")
+                .build();
+
         Optional<Ticket> ofResult = Optional.of(ticket);
-        when(ticketRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
-        commentService.createComment(new CommentRequest());
-        verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<CommentResponse>>any());
-        verify(ticketRepository).findById(Mockito.<Long>any());
-        verify(commentRepository).save(Mockito.<Comment>any());
+        when(ticketRepository.findById(Mockito.any())).thenReturn(ofResult);
+
+        CommentRequest commentRequest = CommentRequest.builder()
+                .build();
+
+        commentService.createComment(commentRequest);
+
+        verify(modelMapper).map(Mockito.any(), Mockito.any());
+        verify(ticketRepository).findById(Mockito.any());
+        verify(commentRepository).save(Mockito.any());
     }
+
 
     @Test
     void testViewAllComments() {

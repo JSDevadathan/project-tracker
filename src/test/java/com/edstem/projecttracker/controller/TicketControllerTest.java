@@ -3,6 +3,7 @@ package com.edstem.projecttracker.controller;
 import com.edstem.projecttracker.contract.request.TicketRequest;
 import com.edstem.projecttracker.contract.response.TicketResponse;
 import com.edstem.projecttracker.model.Category;
+import com.edstem.projecttracker.model.Ticket;
 import com.edstem.projecttracker.repository.CategoryRepository;
 import com.edstem.projecttracker.repository.TicketRepository;
 import com.edstem.projecttracker.service.TicketService;
@@ -25,7 +26,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -50,15 +51,18 @@ class TicketControllerTest {
                 .title("Dr")
                 .build());
 
-        Category category = new Category();
-        category.setCategoryId(1L);
-        category.setName("Name");
+        Category category = Category.builder()
+                .categoryId(1L)
+                .name("Name")
+                .build();
 
-        TicketRequest ticketRequest = new TicketRequest();
-        ticketRequest.setAcceptanceCriteria("Acceptance Criteria");
-        ticketRequest.setCategoryId(1L);
-        ticketRequest.setDescription("The characteristics of someone or something");
-        ticketRequest.setTitle("Dr");
+        TicketRequest ticketRequest = TicketRequest.builder()
+                .acceptanceCriteria("Acceptance Criteria")
+                .categoryId(1L)
+                .description("The characteristics of someone or something")
+                .title("Dr")
+                .build();
+
         String content = (new ObjectMapper()).writeValueAsString(ticketRequest);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/tickets/create")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -126,15 +130,18 @@ class TicketControllerTest {
                         .title("Dr")
                         .build());
 
-        Category category = new Category();
-        category.setCategoryId(1L);
-        category.setName("Name");
+        Category category = Category.builder()
+                .categoryId(1L)
+                .name("Name")
+                .build();
 
-        TicketRequest ticketRequest = new TicketRequest();
-        ticketRequest.setAcceptanceCriteria("Acceptance Criteria");
-        ticketRequest.setCategoryId(1L);
-        ticketRequest.setDescription("The characteristics of someone or something");
-        ticketRequest.setTitle("Dr");
+        TicketRequest ticketRequest = TicketRequest.builder()
+                .acceptanceCriteria("Acceptance Criteria")
+                .categoryId(1L)
+                .description("The characteristics of someone or something")
+                .title("Dr")
+                .build();
+
         String content = (new ObjectMapper()).writeValueAsString(ticketRequest);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/tickets/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -150,6 +157,7 @@ class TicketControllerTest {
                                         + "\":\"Acceptance Criteria\",\"categoryId\":1,\"comments\":null}"));
     }
 
+
     @Test
     void testDeleteTicket() throws Exception {
         doNothing().when(ticketService).deleteTicket(Mockito.<Long>any());
@@ -162,26 +170,16 @@ class TicketControllerTest {
     }
 
     @Test
-    void testSearchPosts() throws Exception {
-        when(ticketService.searchPosts(Mockito.<String>any())).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/tickets/search").param("query", "foo");
-        MockMvcBuilders.standaloneSetup(ticketController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
-    }
-
-    @Test
-    void testGetPostsByPageable() {
-
+    void testSearchPagination() {
+        ArrayList<Ticket> content = new ArrayList<>();
+        content.add(new Ticket());
         TicketRepository ticketRepository = mock(TicketRepository.class);
-        when(ticketRepository.findAll(Mockito.<Pageable>any())).thenReturn(new PageImpl<>(new ArrayList<>()));
+        when(ticketRepository.searchPosts(Mockito.<String>any(), Mockito.<Pageable>any()))
+                .thenReturn(new PageImpl<>(content));
         CategoryRepository categoryRepository = mock(CategoryRepository.class);
-        Page<TicketResponse> actualPostsByPageable = (new TicketController(
-                new TicketService(ticketRepository, categoryRepository, new ModelMapper()))).getPostsByPageable(null);
-        verify(ticketRepository).findAll(Mockito.<Pageable>any());
-        assertTrue(actualPostsByPageable.toList().isEmpty());
+        Page<TicketResponse> actualSearchPaginationResult = (new TicketController(
+                new TicketService(ticketRepository, categoryRepository, new ModelMapper()))).SearchPagination("Query", null);
+        verify(ticketRepository).searchPosts(Mockito.<String>any(), Mockito.<Pageable>any());
+        assertEquals(1, actualSearchPaginationResult.toList().size());
     }
 }
