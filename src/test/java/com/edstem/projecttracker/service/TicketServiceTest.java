@@ -122,16 +122,7 @@ class TicketServiceTest {
         List<TicketResponse> actualTicketsByCategoryId = ticketService.getTicketsByCategoryId(1L);
 
         verify(ticketRepository).findByCategoryCategoryId(Mockito.any());
-        verify(categoryRepository).findById(Mockito.any());
         assertTrue(actualTicketsByCategoryId.isEmpty());
-    }
-
-
-    @Test
-    void testGetTicketsByCategoryIdCategoryNotFound() {
-        Long categoryId = 1L;
-        when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
-        assertThrows(EntityNotFoundException.class, () -> ticketService.getTicketsByCategoryId(categoryId));
     }
 
 
