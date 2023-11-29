@@ -36,7 +36,6 @@ public class TicketService {
         return modelMapper.map(ticket, TicketResponse.class);
     }
 
-
     public List<TicketResponse> viewTicket() {
         List<Ticket> userProfiles = ticketRepository.findAll();
         return userProfiles.stream()
@@ -45,14 +44,6 @@ public class TicketService {
     }
 
     public List<TicketResponse> getTicketsByCategoryId(Long categoryId) {
-        Category category =
-                categoryRepository
-                        .findById(categoryId)
-                        .orElseThrow(
-                                () ->
-                                        new EntityNotFoundException(
-                                                "Category not found", +categoryId));
-
         List<Ticket> tickets = ticketRepository.findByCategoryCategoryId(categoryId);
 
         return tickets.stream()
