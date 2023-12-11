@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,5 +15,4 @@ public class TicketResponse {
     private String description;
     private String acceptanceCriteria;
     private Long categoryId;
-    private List<CommentResponse> comments;
 }

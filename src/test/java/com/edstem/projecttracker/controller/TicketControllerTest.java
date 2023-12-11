@@ -75,7 +75,7 @@ class TicketControllerTest {
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
                                 "{\"ticketId\":1,\"title\":\"Dr\",\"description\":\"The characteristics of someone or something\",\"acceptanceCriteria"
-                                        + "\":\"Acceptance Criteria\",\"categoryId\":1,\"comments\":null}"));
+                                        + "\":\"Acceptance Criteria\",\"categoryId\":1}"));
     }
 
 
@@ -154,7 +154,7 @@ class TicketControllerTest {
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
                                 "{\"ticketId\":1,\"title\":\"Dr\",\"description\":\"The characteristics of someone or something\",\"acceptanceCriteria"
-                                        + "\":\"Acceptance Criteria\",\"categoryId\":1,\"comments\":null}"));
+                                        + "\":\"Acceptance Criteria\",\"categoryId\":1}"));
     }
 
 

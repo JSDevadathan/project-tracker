@@ -27,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -55,7 +56,6 @@ class TicketServiceTest {
         Ticket ticket = Ticket.builder()
                 .acceptanceCriteria("Acceptance Criteria")
                 .category(category)
-                .comments(new ArrayList<>())
                 .description("The characteristics of someone or something")
                 .ticketId(1L)
                 .title("Dr")
@@ -155,7 +155,6 @@ class TicketServiceTest {
         Ticket ticket = Ticket.builder()
                 .acceptanceCriteria("Acceptance Criteria")
                 .category(category)
-                .comments(new ArrayList<>())
                 .description("The characteristics of someone or something")
                 .ticketId(1L)
                 .title("Dr")
@@ -171,7 +170,6 @@ class TicketServiceTest {
         Ticket ticket2 = Ticket.builder()
                 .acceptanceCriteria("Acceptance Criteria")
                 .category(category2)
-                .comments(new ArrayList<>())
                 .description("The characteristics of someone or something")
                 .ticketId(1L)
                 .title("Dr")
@@ -229,19 +227,31 @@ class TicketServiceTest {
         content.add(new Ticket());
         PageImpl<Ticket> pageImpl = new PageImpl<>(content);
         when(ticketRepository.searchPosts(Mockito.<String>any(), Mockito.<Pageable>any())).thenReturn(pageImpl);
-        TicketResponse.TicketResponseBuilder categoryIdResult = TicketResponse.builder()
+        TicketResponse buildResult = TicketResponse.builder()
                 .acceptanceCriteria("Acceptance Criteria")
-                .categoryId(1L);
-        when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any()))
-                .thenReturn(categoryIdResult.comments(new ArrayList<>())
-                        .description("The characteristics of someone or something")
-                        .ticketId(1L)
-                        .title("Dr")
-                        .build());
+                .categoryId(1L)
+                .description("The characteristics of someone or something")
+                .ticketId(1L)
+                .title("Dr")
+                .build();
+        when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any())).thenReturn(buildResult);
         Page<TicketResponse> actualSearchPaginationResult = ticketService.SearchPagination("Query", null);
         verify(ticketRepository).searchPosts(Mockito.<String>any(), Mockito.<Pageable>any());
         verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<TicketResponse>>any());
         assertEquals(1, actualSearchPaginationResult.toList().size());
+    }
+
+    @Test
+    public void testSearchPagination_throwsEntityNotFoundException() {
+
+        String query = "test";
+        Pageable pageable = mock(Pageable.class);
+        Page<Ticket> page = mock(Page.class);
+
+        when(ticketRepository.searchPosts(query, pageable)).thenReturn(page);
+        when(page.isEmpty()).thenReturn(true);
+
+        assertThrows(EntityNotFoundException.class, () -> ticketService.SearchPagination(query, pageable));
     }
 }
 
