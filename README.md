@@ -58,22 +58,6 @@ The Project Tracker Application is a versatile tool designed to maintain project
 - **Method:** GET
 - **Description:** Retrieve a list of all category.
 
-### Create comment
-- **Endpoint:** `/comments`
-- **Method:** POST
-- **Description:** Create a new comment.
-
-### List comments
-- **Endpoint:** `/comments`
-- **Method:** GET
-- **Description:** Retrieve a list of all comments.
-
-### Delete comments
-- **Endpoint:** `/comments/{commentId}`
-- **Method:** DELETE
-- **Description:** Delete a specific comment by its commentId.
-
-
 
 ## Installation
 
